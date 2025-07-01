@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PreguntasEnrollRepository extends JpaRepository<PreguntasEnrollId, PreguntasEnroll> {
+public interface PreguntasEnrollRepository extends JpaRepository<PreguntasEnroll, PreguntasEnrollId> {
 }

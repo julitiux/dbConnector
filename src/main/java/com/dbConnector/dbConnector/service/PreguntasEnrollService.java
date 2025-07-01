@@ -15,12 +15,14 @@ public class PreguntasEnrollService {
     this.preguntasEnrollRepository = preguntasEnrollRepository;
   }
 
-  public void deletePreguntasEnrollByExpediente(String expediente) {
+  public Boolean deletePreguntasEnrollByExpediente(String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
-    if (!preguntasEnrolls.isEmpty())
+    if (!preguntasEnrolls.isEmpty()) {
       preguntasEnrollRepository.deleteAll(preguntasEnrolls);
-    else
-      throw new RuntimeException();
+      return true;
+    } else {
+      return false;
+    }
   }
 }

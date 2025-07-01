@@ -24,7 +24,7 @@ public class PreguntasEnrollController {
   public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("expediente") String expediente) {
     log.info("Deleting preguntas enroll for expediente: {}", expediente);
 
-    preguntasEnrollService.deletePreguntasEnrollByExpediente(expediente);
-    return ResponseEntity.noContent().build();
+    Boolean expedienteDeleted = preguntasEnrollService.deletePreguntasEnrollByExpediente(expediente);
+    return expedienteDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
   }
 }

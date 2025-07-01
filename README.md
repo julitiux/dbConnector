@@ -14,3 +14,8 @@
 ```shell
 docker exec -it dbConnector psql -U user -d db
 ```
+
+## httpie command delete
+```shell
+http DELETE http://localhost:8080/preguntas-enroll/EXP002/delete
+```

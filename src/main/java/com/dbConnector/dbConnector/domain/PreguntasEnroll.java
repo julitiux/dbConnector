@@ -1,9 +1,6 @@
 package com.dbConnector.dbConnector.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,4 +21,8 @@ public class PreguntasEnroll {
 
   @Column(name = "fecha_hora", length = 20)
   private String fechaHora;
+
+  @ManyToOne
+  @JoinColumn(name = "no_pregunta", referencedColumnName = "no_pregunta", insertable = false, updatable = false)
+  private CatalogoPreguntas catalogoPreguntas;
 }

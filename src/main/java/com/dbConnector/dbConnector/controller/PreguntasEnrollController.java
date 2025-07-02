@@ -1,13 +1,14 @@
 package com.dbConnector.dbConnector.controller;
 
 
+import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
+import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PreguntasEnrollController {
 
   private final PreguntasEnrollService preguntasEnrollService;
+  private final CatalogoPreguntasService catalogoPreguntasService;
 
-  public PreguntasEnrollController(PreguntasEnrollService preguntasEnrollService) {
+  public PreguntasEnrollController(PreguntasEnrollService preguntasEnrollService, CatalogoPreguntasService catalogoPreguntasService) {
     this.preguntasEnrollService = preguntasEnrollService;
+    this.catalogoPreguntasService = catalogoPreguntasService;
   }
 
   @DeleteMapping("/{expediente}/delete")
@@ -26,5 +29,14 @@ public class PreguntasEnrollController {
 
     Boolean expedienteDeleted = preguntasEnrollService.deletePreguntasEnrollByExpediente(expediente);
     return expedienteDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+  }
+
+  @GetMapping("/{status_id}/questions")
+  public ResponseEntity<List<CatalogoPreguntas>> getCatalogoPreguntasByEstatus(
+    @PathVariable("status_id") String estatusPregunta) {
+    log.info("Fetching catalogo preguntas by estatus: {}", estatusPregunta);
+
+    List<CatalogoPreguntas> catalogoPreguntas = catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta);
+    return ResponseEntity.ok(catalogoPreguntas);
   }
 }

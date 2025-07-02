@@ -19,11 +19,11 @@ CREATE TABLE catalogo_preguntas (
 );
 
 INSERT INTO catalogo_preguntas (no_pregunta, desc_pregunta, estatus_pregunta, fecha_inicio, fecha_estatus) VALUES
-(1, '¿Fuma?', 'ACTIVO', '2024-01-01', '2024-01-01'),
-(2, '¿Toma alcohol?', 'ACTIVO', '2024-01-01', '2024-01-01'),
-(3, '¿Hace ejercicio?', 'ACTIVO', '2024-01-01', '2024-01-01'),
-(4, '¿Alergias?', 'ACTIVO', '2024-01-01', '2024-01-01'),
-(5, '¿Cirugías previas?', 'INACTIVO', '2023-06-01', '2024-06-01');
+(1, '¿Fuma?', 'A', '2024-01-01', '2024-01-01'),
+(2, '¿Toma alcohol?', 'A', '2024-01-01', '2024-01-01'),
+(3, '¿Hace ejercicio?', 'A', '2024-01-01', '2024-01-01'),
+(4, '¿Alergias?', 'A', '2024-01-01', '2024-01-01'),
+(5, '¿Cirugías previas?', 'D', '2023-06-01', '2024-06-01');
 
 CREATE TABLE preguntas_enroll (
     expediente         VARCHAR(20)     NOT NULL,
@@ -36,8 +36,8 @@ CREATE TABLE preguntas_enroll (
 );
 
 INSERT INTO preguntas_enroll (expediente, no_pregunta, respuesta_pregunta, estatus, fecha_hora) VALUES
-('EXP001', 1, 'Sí', 'ACTIVO', '2025-06-30 10:00'),
-('EXP001', 2, 'No', 'ACTIVO', '2025-06-30 10:05'),
-('EXP001', 3, 'Sí', 'ACTIVO', '2025-06-30 10:10'),
-('EXP002', 1, 'No', 'ACTIVO', '2025-06-30 11:00'),
-('EXP002', 4, 'Polen', 'ACTIVO', '2025-06-30 11:05');
+('EXP001', 1, 'Sí', 'A', '2025-06-30 10:00'),
+('EXP001', 2, 'No', 'A', '2025-06-30 10:05'),
+('EXP001', 3, 'Sí', 'A', '2025-06-30 10:10'),
+('EXP002', 1, 'No', 'A', '2025-06-30 11:00'),
+('EXP002', 4, 'Polen', 'A', '2025-06-30 11:05');

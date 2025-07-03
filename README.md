@@ -20,6 +20,10 @@ docker exec -it dbConnector psql -U user -d db
 http DELETE http://localhost:8080/preguntas-enroll/EXP002/delete
 
 http GET http://localhost:8080/preguntas-enroll/A/questions
+
+http POST http://localhost:8080/preguntas-enroll/EXP006/enrollment_questionnaire \
+  Content-Type:application/json \
+  <<< '[{"id":{"noPregunta":1},"respuestaPregunta":"Respuesta 0"},{"id":{"noPregunta":2},"respuestaPregunta":"Respuesta 0"},{"id":{"noPregunta":3},"respuestaPregunta":"Respuesta 0"},{"id":{"noPregunta":4},"respuestaPregunta":"Respuesta 0"},{"id":{"noPregunta":5},"respuestaPregunta":"Respuesta 0"}]'
 ```
 
 ## command postgreSQL

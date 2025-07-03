@@ -2,6 +2,7 @@ package com.dbConnector.dbConnector.controller;
 
 
 import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
+import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +24,8 @@ public class PreguntasEnrollController {
     this.catalogoPreguntasService = catalogoPreguntasService;
   }
 
-  @DeleteMapping("/{expediente}/delete")
-  public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("expediente") String expediente) {
+  @DeleteMapping("/{employee_id}/delete")
+  public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
     log.info("Deleting preguntas enroll for expediente: {}", expediente);
 
     Boolean expedienteDeleted = preguntasEnrollService.deletePreguntasEnrollByExpediente(expediente);
@@ -38,5 +39,16 @@ public class PreguntasEnrollController {
 
     List<CatalogoPreguntas> catalogoPreguntas = catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta);
     return ResponseEntity.ok(catalogoPreguntas);
+  }
+
+  @PostMapping("/{employee_id}/enrollment_questionnaire")
+  public ResponseEntity<List<PreguntasEnroll>> createPreguntasEnroll(
+    @PathVariable("employee_id") String expediente,
+    @RequestBody List<PreguntasEnroll> preguntasEnrolls) {
+    log.info("Creating preguntas enroll for expediente: {}", expediente);
+
+    List<PreguntasEnroll> createdPreguntasEnrolls =
+      preguntasEnrollService.createPreguntasEnroll(preguntasEnrolls, expediente);
+    return ResponseEntity.ok(createdPreguntasEnrolls);
   }
 }

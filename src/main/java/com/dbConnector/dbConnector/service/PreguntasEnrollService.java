@@ -4,12 +4,17 @@ import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class PreguntasEnrollService {
 
   private final PreguntasEnrollRepository preguntasEnrollRepository;
+
+  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy:HHmmss", Locale.ENGLISH);
 
   public PreguntasEnrollService(PreguntasEnrollRepository preguntasEnrollRepository) {
     this.preguntasEnrollRepository = preguntasEnrollRepository;
@@ -24,5 +29,15 @@ public class PreguntasEnrollService {
     } else {
       return false;
     }
+  }
+
+  public List<PreguntasEnroll> createPreguntasEnroll(List<PreguntasEnroll> preguntasEnrolls, String expediente) {
+
+    preguntasEnrolls.forEach(pregunta -> {
+      pregunta.getId().setExpediente(expediente);
+      pregunta.setEstatus("A");
+      pregunta.setFechaHora(LocalDateTime.now().format(formatter));
+    });
+    return preguntasEnrollRepository.saveAll(preguntasEnrolls);
   }
 }

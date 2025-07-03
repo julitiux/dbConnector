@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -50,5 +51,18 @@ public class PreguntasEnrollController {
     List<PreguntasEnroll> createdPreguntasEnrolls =
       preguntasEnrollService.createPreguntasEnroll(preguntasEnrolls, expediente);
     return ResponseEntity.ok(createdPreguntasEnrolls);
+  }
+
+  @GetMapping("/{employee_id}/questionnaire")
+  private ResponseEntity<List<Integer>> getPreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
+    log.info("Fetching preguntas enroll by expediente: {}", expediente);
+
+    List<Integer> preguntasEnrolls = preguntasEnrollService.getPreguntasEnrollByExpediente(expediente);
+
+    log.info("{}", preguntasEnrolls.size());
+    return Optional.of(preguntasEnrolls)
+      .filter(list -> !list.isEmpty())
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.noContent().build());
   }
 }

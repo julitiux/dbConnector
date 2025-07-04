@@ -45,6 +45,8 @@ http POST http://localhost:8080/preguntas-enroll/EXP002/validate_questionnaire \
     "catalogoPreguntas": null
   }
 ]'
+
+http GET http://localhost:8080/preguntas-enroll/EXP001/retrieve_subordinates
 ```
 
 ## command postgreSQL

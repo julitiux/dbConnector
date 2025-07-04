@@ -54,7 +54,7 @@ public class PreguntasEnrollController {
   }
 
   @GetMapping("/{employee_id}/questionnaire")
-  private ResponseEntity<List<Integer>> getPreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
+  public ResponseEntity<List<Integer>> getPreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
     log.info("Fetching preguntas enroll by expediente: {}", expediente);
 
     List<Integer> preguntasEnrolls = preguntasEnrollService.getPreguntasEnrollByExpediente(expediente);
@@ -65,4 +65,20 @@ public class PreguntasEnrollController {
       .map(ResponseEntity::ok)
       .orElseGet(() -> ResponseEntity.noContent().build());
   }
+
+  @PostMapping("/{employee_id}/validate_questionnaire")
+  public ResponseEntity<List<PreguntasEnroll>> processValidatePreguntasEnroll(
+    @PathVariable("employee_id") String expediente,
+    @RequestBody List<PreguntasEnroll> preguntasEnrolls) {
+    log.info("Processing preguntas enroll for expediente: {}", expediente);
+
+    List<PreguntasEnroll> matching = preguntasEnrollService.validatePreguntasEnroll(preguntasEnrolls, expediente);
+
+    return Optional.of(matching)
+      .filter(list -> !list.isEmpty())
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.noContent().build());
+  }
+
+
 }

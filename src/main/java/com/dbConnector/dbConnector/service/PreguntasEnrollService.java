@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PreguntasEnrollService {
@@ -52,5 +54,20 @@ public class PreguntasEnrollService {
       .toList());
     Collections.shuffle(preguntasIds);
     return preguntasIds.stream().limit(3).toList();
+  }
+
+  public List<PreguntasEnroll> validatePreguntasEnroll(List<PreguntasEnroll> preguntasEnrolls, String expediente) {
+
+    List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
+
+    Set<String> savedKeys = preguntasEnrollsSaved.stream()
+      .map(pe -> pe.getId().getExpediente() + "-" + pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta())
+      .collect(Collectors.toSet());
+
+    // Filter input list by matching keys
+    return preguntasEnrolls.stream()
+      .filter(pe -> savedKeys.contains(
+        pe.getId().getExpediente() + "-" + pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta()))
+      .toList();
   }
 }

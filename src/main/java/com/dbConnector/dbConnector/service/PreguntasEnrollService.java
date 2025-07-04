@@ -60,6 +60,9 @@ public class PreguntasEnrollService {
 
     List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
 
+    // TODO: Preguntar si los campos a comprar solo seran expediente, noPregunta y respuestaPregunta
+    // TODO: Verificar por que solo expediente es obligatorio y no los otros campos
+
     Set<String> savedKeys = preguntasEnrollsSaved.stream()
       .map(pe -> pe.getId().getExpediente() + "-" + pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta())
       .collect(Collectors.toSet());

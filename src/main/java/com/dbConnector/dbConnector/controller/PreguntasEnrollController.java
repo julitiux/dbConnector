@@ -5,6 +5,7 @@ import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
+import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,12 @@ public class PreguntasEnrollController {
 
   private final PreguntasEnrollService preguntasEnrollService;
   private final CatalogoPreguntasService catalogoPreguntasService;
+  private final SupervisorExpedienteService supervisorExpedienteService;
 
-  public PreguntasEnrollController(PreguntasEnrollService preguntasEnrollService, CatalogoPreguntasService catalogoPreguntasService) {
+  public PreguntasEnrollController(PreguntasEnrollService preguntasEnrollService, CatalogoPreguntasService catalogoPreguntasService, SupervisorExpedienteService supervisorExpedienteService) {
     this.preguntasEnrollService = preguntasEnrollService;
     this.catalogoPreguntasService = catalogoPreguntasService;
+    this.supervisorExpedienteService = supervisorExpedienteService;
   }
 
   @DeleteMapping("/{employee_id}/delete")
@@ -80,5 +83,15 @@ public class PreguntasEnrollController {
       .orElseGet(() -> ResponseEntity.noContent().build());
   }
 
+  @GetMapping("/{employee_id}/retrieve_subordinates")
+  public ResponseEntity<List<String>> getSubordinadosByExpediente(@PathVariable("employee_id") String expediente) {
+    log.info("Fetching subordinados by expediente: {}", expediente);
 
+    List<String> subordinados = supervisorExpedienteService.getSubordinariosId(expediente);
+
+    return Optional.of(subordinados)
+      .filter(list -> !list.isEmpty())
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.noContent().build());
+  }
 }

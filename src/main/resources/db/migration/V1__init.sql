@@ -41,3 +41,23 @@ INSERT INTO sd_preguntas_enroll (expediente, no_pregunta, respuesta_pregunta, es
 ('EXP001', 3, 'Sí', 'A', '2025-06-30 10:10'),
 ('EXP002', 1, 'No', 'A', '2025-06-30 11:00'),
 ('EXP002', 4, 'Polen', 'A', '2025-06-30 11:05');
+
+
+CREATE TABLE sd_supervisor_expediente (
+    callid            VARCHAR(50)    NOT NULL,
+    expediente        VARCHAR(20),
+    exp_agente        VARCHAR(20),
+    PRIMARY KEY (callid)
+);
+
+INSERT INTO sd_supervisor_expediente(callid, expediente, exp_agente) VALUES
+('1', 'EXP001', 'AGENTE0011'),
+('2', 'EXP001', 'AGENTE0012'),
+('3', 'EXP001', 'AGENTE0013'),
+('4', 'EXP001', 'AGENTE0014'),
+('5', 'EXP002', 'AGENTE0020'),
+('6', 'EXP002', 'AGENTE0021'),
+('7', 'EXP002', 'AGENTE0022'),
+('8', 'EXP002', 'AGENTE0023'),
+('9', 'EXP002', 'AGENTE0024'),
+('10', 'EXP002', 'AGENTE0024');

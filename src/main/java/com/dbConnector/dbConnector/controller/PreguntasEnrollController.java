@@ -3,6 +3,7 @@ package com.dbConnector.dbConnector.controller;
 
 import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
+import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaire;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
@@ -72,10 +73,10 @@ public class PreguntasEnrollController {
   @PostMapping("/{employee_id}/validate_questionnaire")
   public ResponseEntity<List<PreguntasEnroll>> processValidatePreguntasEnroll(
     @PathVariable("employee_id") String expediente,
-    @RequestBody List<PreguntasEnroll> preguntasEnrolls) {
+    @RequestBody WrapperPostEnrollmentQuestionnaire request) {
     log.info("Processing preguntas enroll for expediente: {}", expediente);
 
-    List<PreguntasEnroll> matching = preguntasEnrollService.validatePreguntasEnroll(preguntasEnrolls, expediente);
+    List<PreguntasEnroll> matching = preguntasEnrollService.validatePreguntasEnroll(request, expediente);
 
     return Optional.of(matching)
       .filter(list -> !list.isEmpty())

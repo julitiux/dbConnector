@@ -1,6 +1,8 @@
 package com.dbConnector.dbConnector.service;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
+import com.dbConnector.dbConnector.mapper.IAnswerDetailsQuestion;
+import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaire;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +18,13 @@ import java.util.stream.Collectors;
 public class PreguntasEnrollService {
 
   private final PreguntasEnrollRepository preguntasEnrollRepository;
+  private final IAnswerDetailsQuestion answerDetailsQuestion;
 
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy:HHmmss", Locale.ENGLISH);
 
-  public PreguntasEnrollService(PreguntasEnrollRepository preguntasEnrollRepository) {
+  public PreguntasEnrollService(PreguntasEnrollRepository preguntasEnrollRepository, IAnswerDetailsQuestion answerDetailsQuestion) {
     this.preguntasEnrollRepository = preguntasEnrollRepository;
+    this.answerDetailsQuestion = answerDetailsQuestion;
   }
 
   public Boolean deletePreguntasEnrollByExpediente(String expediente) {
@@ -56,21 +60,21 @@ public class PreguntasEnrollService {
     return preguntasIds.stream().limit(3).toList();
   }
 
-  public List<PreguntasEnroll> validatePreguntasEnroll(List<PreguntasEnroll> preguntasEnrolls, String expediente) {
+  public List<PreguntasEnroll> validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaire request, String expediente) {
 
+    List<PreguntasEnroll> preguntasEnrolls = answerDetailsQuestion.mapToPreguntasEnrollList(request);
     List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
 
     // TODO: Preguntar si los campos a comprar solo seran expediente, noPregunta y respuestaPregunta
     // TODO: Verificar por que solo expediente es obligatorio y no los otros campos
 
     Set<String> savedKeys = preguntasEnrollsSaved.stream()
-      .map(pe -> pe.getId().getExpediente() + "-" + pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta())
+      .map(pe -> pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta())
       .collect(Collectors.toSet());
 
     // Filter input list by matching keys
     return preguntasEnrolls.stream()
-      .filter(pe -> savedKeys.contains(
-        pe.getId().getExpediente() + "-" + pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta()))
+      .filter(pe -> savedKeys.contains(pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta()))
       .toList();
   }
 }

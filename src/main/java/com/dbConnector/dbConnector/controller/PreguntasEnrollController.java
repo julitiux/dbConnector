@@ -39,6 +39,17 @@ public class PreguntasEnrollController {
     return matching ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
   }
 
+  @PostMapping("/{employee_id}/enrollment_questionnaire")
+  public ResponseEntity<List<PreguntasEnroll>> createPreguntasEnroll(
+    @PathVariable("employee_id") String expediente,
+    @RequestBody List<PreguntasEnroll> preguntasEnrolls) {
+    log.info("Creating preguntas enroll for expediente: {}", expediente);
+
+    List<PreguntasEnroll> createdPreguntasEnrolls =
+      preguntasEnrollService.createPreguntasEnroll(preguntasEnrolls, expediente);
+    return ResponseEntity.ok(createdPreguntasEnrolls);
+  }
+
   @DeleteMapping("/{employee_id}/delete")
   public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
     log.info("Deleting preguntas enroll for expediente: {}", expediente);
@@ -54,17 +65,6 @@ public class PreguntasEnrollController {
 
     List<CatalogoPreguntas> catalogoPreguntas = catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta);
     return ResponseEntity.ok(catalogoPreguntas);
-  }
-
-  @PostMapping("/{employee_id}/enrollment_questionnaire")
-  public ResponseEntity<List<PreguntasEnroll>> createPreguntasEnroll(
-    @PathVariable("employee_id") String expediente,
-    @RequestBody List<PreguntasEnroll> preguntasEnrolls) {
-    log.info("Creating preguntas enroll for expediente: {}", expediente);
-
-    List<PreguntasEnroll> createdPreguntasEnrolls =
-      preguntasEnrollService.createPreguntasEnroll(preguntasEnrolls, expediente);
-    return ResponseEntity.ok(createdPreguntasEnrolls);
   }
 
   @GetMapping("/{employee_id}/questionnaire")

@@ -27,6 +27,14 @@ public class PreguntasEnrollService {
     this.answerDetailsQuestion = answerDetailsQuestion;
   }
 
+  public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaire request, String expediente) {
+
+    List<PreguntasEnroll> preguntasEnrolls = answerDetailsQuestion.mapToPreguntasEnrollList(request);
+    List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
+
+    return preguntasEnrollsSaved.equals(preguntasEnrolls);
+  }
+
   public Boolean deletePreguntasEnrollByExpediente(String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
@@ -58,13 +66,5 @@ public class PreguntasEnrollService {
       .toList());
     Collections.shuffle(preguntasIds);
     return preguntasIds.stream().limit(3).toList();
-  }
-
-  public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaire request, String expediente) {
-
-    List<PreguntasEnroll> preguntasEnrolls = answerDetailsQuestion.mapToPreguntasEnrollList(request);
-    List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
-
-    return preguntasEnrollsSaved.equals(preguntasEnrolls);
   }
 }

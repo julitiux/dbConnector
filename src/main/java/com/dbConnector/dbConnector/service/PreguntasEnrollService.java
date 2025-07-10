@@ -4,6 +4,7 @@ import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.mapper.IAnswerDetailsQuestion;
 import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaire;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,9 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class PreguntasEnrollService {
 
@@ -60,21 +60,11 @@ public class PreguntasEnrollService {
     return preguntasIds.stream().limit(3).toList();
   }
 
-  public List<PreguntasEnroll> validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaire request, String expediente) {
+  public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaire request, String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = answerDetailsQuestion.mapToPreguntasEnrollList(request);
     List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
 
-    // TODO: Preguntar si los campos a comprar solo seran expediente, noPregunta y respuestaPregunta
-    // TODO: Verificar por que solo expediente es obligatorio y no los otros campos
-
-    Set<String> savedKeys = preguntasEnrollsSaved.stream()
-      .map(pe -> pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta())
-      .collect(Collectors.toSet());
-
-    // Filter input list by matching keys
-    return preguntasEnrolls.stream()
-      .filter(pe -> savedKeys.contains(pe.getId().getNoPregunta() + "-" + pe.getRespuestaPregunta()))
-      .toList();
+    return preguntasEnrollsSaved.equals(preguntasEnrolls);
   }
 }

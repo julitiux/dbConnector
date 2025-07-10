@@ -8,7 +8,6 @@ import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.http11.filters.VoidOutputFilter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +27,16 @@ public class PreguntasEnrollController {
     this.preguntasEnrollService = preguntasEnrollService;
     this.catalogoPreguntasService = catalogoPreguntasService;
     this.supervisorExpedienteService = supervisorExpedienteService;
+  }
+
+  @PostMapping("/{employee_id}/validate_questionnaire")
+  public ResponseEntity<Void> processValidatePreguntasEnroll(
+    @PathVariable("employee_id") String expediente,
+    @RequestBody WrapperPostEnrollmentQuestionnaire request) {
+    log.info("Processing preguntas enroll for expediente: {}", expediente);
+
+    Boolean matching = preguntasEnrollService.validatePreguntasEnroll(request, expediente);
+    return matching ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
   }
 
   @DeleteMapping("/{employee_id}/delete")
@@ -69,16 +78,6 @@ public class PreguntasEnrollController {
       .filter(list -> !list.isEmpty())
       .map(ResponseEntity::ok)
       .orElseGet(() -> ResponseEntity.noContent().build());
-  }
-
-  @PostMapping("/{employee_id}/validate_questionnaire")
-  public ResponseEntity<Void> processValidatePreguntasEnroll(
-    @PathVariable("employee_id") String expediente,
-    @RequestBody WrapperPostEnrollmentQuestionnaire request) {
-    log.info("Processing preguntas enroll for expediente: {}", expediente);
-
-    Boolean matching = preguntasEnrollService.validatePreguntasEnroll(request, expediente);
-    return matching ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
   }
 
   @GetMapping("/{employee_id}/retrieve_subordinates")

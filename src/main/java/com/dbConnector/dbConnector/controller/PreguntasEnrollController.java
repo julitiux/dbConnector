@@ -8,6 +8,8 @@ import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +33,7 @@ public class PreguntasEnrollController {
 
   @PostMapping("/{employee_id}/validate_questionnaire")
   public ResponseEntity<Void> processValidatePreguntasEnroll(
-    @PathVariable("employee_id") String expediente,
-    @RequestBody WrapperPostEnrollmentQuestionnaireRequest request) {
+    @PathVariable("employee_id") String expediente, @RequestBody WrapperPostEnrollmentQuestionnaireRequest request) {
     log.info("Processing preguntas enroll for expediente: {}", expediente);
 
     Boolean matching = preguntasEnrollService.validatePreguntasEnroll(request, expediente);
@@ -40,14 +41,14 @@ public class PreguntasEnrollController {
   }
 
   @PostMapping("/{employee_id}/enrollment_questionnaire")
-  public ResponseEntity<List<PreguntasEnroll>> createPreguntasEnroll(
-    @PathVariable("employee_id") String expediente,
-    @RequestBody List<PreguntasEnroll> preguntasEnrolls) {
+  public ResponseEntity<Void> createPreguntasEnroll(
+    @PathVariable("employee_id") String expediente, @RequestBody WrapperPostEnrollmentQuestionnaireRequest request) {
     log.info("Creating preguntas enroll for expediente: {}", expediente);
 
-    List<PreguntasEnroll> createdPreguntasEnrolls =
-      preguntasEnrollService.createPreguntasEnroll(preguntasEnrolls, expediente);
-    return ResponseEntity.ok(createdPreguntasEnrolls);
+    Boolean preguntasEnrollsCreated = preguntasEnrollService.createPreguntasEnroll(request, expediente);
+    return preguntasEnrollsCreated ?
+      ResponseEntity.status(HttpStatus.CREATED).build() :
+      ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
   }
 
   @DeleteMapping("/{employee_id}/delete")

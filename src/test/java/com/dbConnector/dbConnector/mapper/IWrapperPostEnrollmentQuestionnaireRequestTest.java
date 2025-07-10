@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 class IWrapperPostEnrollmentQuestionnaireRequestTest {
 
-  private final IWrapperPostEnrollmentQuestionnaireRequest mapper = Mappers.getMapper(IWrapperPostEnrollmentQuestionnaireRequest.class);
+  private final IWrapperPostEnrollmentQuestionnaireMapper mapper = Mappers.getMapper(IWrapperPostEnrollmentQuestionnaireMapper.class);
 
   @Test
   void to_withValidWrapper_returnsMappedList() {

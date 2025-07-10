@@ -1,6 +1,7 @@
 package com.dbConnector.dbConnector.domain;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "sd_preguntas_enroll")
+@EqualsAndHashCode(of = "respuestaPregunta")
 public class PreguntasEnroll {
 
   @EmbeddedId

@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 public class WrapperPostEnrollmentQuestionnaire {
 
-  private List<AnswersDetails> answersDetails;
+  private List<AnswersDetails> questions;
 
 }

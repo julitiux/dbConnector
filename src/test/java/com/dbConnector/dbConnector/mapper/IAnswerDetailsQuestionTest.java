@@ -3,7 +3,7 @@ package com.dbConnector.dbConnector.mapper;
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.model.AnswersDetails;
 import com.dbConnector.dbConnector.model.AnswersDetailsQuestion;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireResponse;
+import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireRequest;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 class IAnswerDetailsQuestionTest {
 
-  private final IAnswerDetailsQuestion mapper = Mappers.getMapper(IAnswerDetailsQuestion.class);
+  private final IWrapperPostEnrollmentQuestionnaireResponse mapper = Mappers.getMapper(IWrapperPostEnrollmentQuestionnaireResponse.class);
 
   @Test
   void to_withValidWrapper_returnsMappedList() {
@@ -46,7 +46,7 @@ class IAnswerDetailsQuestionTest {
     AnswersDetails details = mock(AnswersDetails.class);
     when(details.getQuestion()).thenReturn(question);
 
-    WrapperPostEnrollmentQuestionnaireResponse wrapper = mock(WrapperPostEnrollmentQuestionnaireResponse.class);
+    WrapperPostEnrollmentQuestionnaireRequest wrapper = mock(WrapperPostEnrollmentQuestionnaireRequest.class);
     when(wrapper.getAnswersDetails()).thenReturn(List.of(details));
 
     // Act

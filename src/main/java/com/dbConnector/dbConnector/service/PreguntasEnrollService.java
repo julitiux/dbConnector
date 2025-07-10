@@ -1,8 +1,8 @@
 package com.dbConnector.dbConnector.service;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
-import com.dbConnector.dbConnector.mapper.IAnswerDetailsQuestion;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireResponse;
+import com.dbConnector.dbConnector.mapper.IWrapperPostEnrollmentQuestionnaireResponse;
+import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,16 +18,16 @@ import java.util.Locale;
 public class PreguntasEnrollService {
 
   private final PreguntasEnrollRepository preguntasEnrollRepository;
-  private final IAnswerDetailsQuestion answerDetailsQuestion;
+  private final IWrapperPostEnrollmentQuestionnaireResponse answerDetailsQuestion;
 
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy:HHmmss", Locale.ENGLISH);
 
-  public PreguntasEnrollService(PreguntasEnrollRepository preguntasEnrollRepository, IAnswerDetailsQuestion answerDetailsQuestion) {
+  public PreguntasEnrollService(PreguntasEnrollRepository preguntasEnrollRepository, IWrapperPostEnrollmentQuestionnaireResponse answerDetailsQuestion) {
     this.preguntasEnrollRepository = preguntasEnrollRepository;
     this.answerDetailsQuestion = answerDetailsQuestion;
   }
 
-  public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaireResponse request, String expediente) {
+  public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaireRequest request, String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = answerDetailsQuestion.mapToPreguntasEnrollList(request);
     List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);

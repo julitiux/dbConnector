@@ -11,7 +11,7 @@ import java.util.List;
   nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT,
   nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT,
   unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface IWrapperPostEnrollmentQuestionnaireResponse {
+public interface IWrapperPostEnrollmentQuestionnaireRequest {
 
   @Mapping(target = "id.noPregunta", source = "question.questionId")
   @Mapping(target = "respuestaPregunta", source = "question.answer")

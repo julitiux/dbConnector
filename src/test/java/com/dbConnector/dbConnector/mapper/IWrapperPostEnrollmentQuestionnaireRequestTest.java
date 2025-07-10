@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class IAnswerDetailsQuestionTest {
+class IWrapperPostEnrollmentQuestionnaireRequestTest {
 
-  private final IWrapperPostEnrollmentQuestionnaireResponse mapper = Mappers.getMapper(IWrapperPostEnrollmentQuestionnaireResponse.class);
+  private final IWrapperPostEnrollmentQuestionnaireRequest mapper = Mappers.getMapper(IWrapperPostEnrollmentQuestionnaireRequest.class);
 
   @Test
   void to_withValidWrapper_returnsMappedList() {
@@ -47,7 +47,7 @@ class IAnswerDetailsQuestionTest {
     when(details.getQuestion()).thenReturn(question);
 
     WrapperPostEnrollmentQuestionnaireRequest wrapper = mock(WrapperPostEnrollmentQuestionnaireRequest.class);
-    when(wrapper.getAnswersDetails()).thenReturn(List.of(details));
+    when(wrapper.getQuestions()).thenReturn(List.of(details));
 
     // Act
     List<PreguntasEnroll> result = mapper.mapToPreguntasEnrollList(wrapper);

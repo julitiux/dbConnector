@@ -1,7 +1,7 @@
 package com.dbConnector.dbConnector.service;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
-import com.dbConnector.dbConnector.mapper.IWrapperPostEnrollmentQuestionnaireResponse;
+import com.dbConnector.dbConnector.mapper.IWrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +18,11 @@ import java.util.Locale;
 public class PreguntasEnrollService {
 
   private final PreguntasEnrollRepository preguntasEnrollRepository;
-  private final IWrapperPostEnrollmentQuestionnaireResponse answerDetailsQuestion;
+  private final IWrapperPostEnrollmentQuestionnaireRequest answerDetailsQuestion;
 
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy:HHmmss", Locale.ENGLISH);
 
-  public PreguntasEnrollService(PreguntasEnrollRepository preguntasEnrollRepository, IWrapperPostEnrollmentQuestionnaireResponse answerDetailsQuestion) {
+  public PreguntasEnrollService(PreguntasEnrollRepository preguntasEnrollRepository, IWrapperPostEnrollmentQuestionnaireRequest answerDetailsQuestion) {
     this.preguntasEnrollRepository = preguntasEnrollRepository;
     this.answerDetailsQuestion = answerDetailsQuestion;
   }

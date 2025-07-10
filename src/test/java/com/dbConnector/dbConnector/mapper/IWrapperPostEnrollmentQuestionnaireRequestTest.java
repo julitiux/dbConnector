@@ -27,11 +27,11 @@ class IWrapperPostEnrollmentQuestionnaireRequestTest {
     when(question.getAnswer()).thenReturn("No");
 
     // Act
-    PreguntasEnroll result = mapper.mapToPreguntasEnroll(question);
+    PreguntasEnroll result = mapper.mapToPreguntasEnrollToCompare(question);
 
     // Assert
-//    assertThat(result).isNotNull();
-//    assertThat(result.getId()).isNotNull();
+    assertThat(result).isNotNull();
+    assertThat(result.getId()).isNotNull();
     assertThat(result.getId().getNoPregunta()).isEqualTo(2);
     assertThat(result.getRespuestaPregunta()).isEqualTo("No");
   }
@@ -50,7 +50,7 @@ class IWrapperPostEnrollmentQuestionnaireRequestTest {
     when(wrapper.getQuestions()).thenReturn(List.of(details));
 
     // Act
-    List<PreguntasEnroll> result = mapper.mapToPreguntasEnrollList(wrapper);
+    List<PreguntasEnroll> result = mapper.mapToPreguntasEnrollListToCompare(wrapper);
 
     // Assert
     assertNotNull(result);

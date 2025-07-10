@@ -2,7 +2,7 @@ package com.dbConnector.dbConnector.service;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.mapper.IAnswerDetailsQuestion;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaire;
+import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireResponse;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class PreguntasEnrollService {
     this.answerDetailsQuestion = answerDetailsQuestion;
   }
 
-  public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaire request, String expediente) {
+  public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaireResponse request, String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = answerDetailsQuestion.mapToPreguntasEnrollList(request);
     List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);

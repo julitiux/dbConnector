@@ -2,7 +2,7 @@ package com.dbConnector.dbConnector.mapper;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.model.AnswersDetailsQuestion;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaire;
+import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireResponse;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface IAnswerDetailsQuestion {
   @Mapping(target = "respuestaPregunta", source = "question.answer")
   PreguntasEnroll mapToPreguntasEnroll(AnswersDetailsQuestion question);
 
-  default List<PreguntasEnroll> mapToPreguntasEnrollList(WrapperPostEnrollmentQuestionnaire request) {
+  default List<PreguntasEnroll> mapToPreguntasEnrollList(WrapperPostEnrollmentQuestionnaireResponse request) {
     return request.getQuestions().stream().map(question -> {
       return mapToPreguntasEnroll(question.getQuestion());
     }).toList();

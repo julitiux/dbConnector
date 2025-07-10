@@ -3,7 +3,7 @@ package com.dbConnector.dbConnector.controller;
 
 import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaire;
+import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireResponse;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
@@ -32,7 +32,7 @@ public class PreguntasEnrollController {
   @PostMapping("/{employee_id}/validate_questionnaire")
   public ResponseEntity<Void> processValidatePreguntasEnroll(
     @PathVariable("employee_id") String expediente,
-    @RequestBody WrapperPostEnrollmentQuestionnaire request) {
+    @RequestBody WrapperPostEnrollmentQuestionnaireResponse request) {
     log.info("Processing preguntas enroll for expediente: {}", expediente);
 
     Boolean matching = preguntasEnrollService.validatePreguntasEnroll(request, expediente);

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class WrapperPostEnrollmentQuestionnaire {
+public class WrapperPostEnrollmentQuestionnaireResponse {
 
   private List<AnswersDetails> questions;
 

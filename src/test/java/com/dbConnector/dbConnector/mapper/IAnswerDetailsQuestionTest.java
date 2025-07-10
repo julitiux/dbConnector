@@ -3,11 +3,10 @@ package com.dbConnector.dbConnector.mapper;
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.model.AnswersDetails;
 import com.dbConnector.dbConnector.model.AnswersDetailsQuestion;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaire;
+import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireResponse;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,7 +46,7 @@ class IAnswerDetailsQuestionTest {
     AnswersDetails details = mock(AnswersDetails.class);
     when(details.getQuestion()).thenReturn(question);
 
-    WrapperPostEnrollmentQuestionnaire wrapper = mock(WrapperPostEnrollmentQuestionnaire.class);
+    WrapperPostEnrollmentQuestionnaireResponse wrapper = mock(WrapperPostEnrollmentQuestionnaireResponse.class);
     when(wrapper.getAnswersDetails()).thenReturn(List.of(details));
 
     // Act

@@ -18,7 +18,7 @@ public interface IAnswerDetailsQuestion {
   PreguntasEnroll mapToPreguntasEnroll(AnswersDetailsQuestion question);
 
   default List<PreguntasEnroll> mapToPreguntasEnrollList(WrapperPostEnrollmentQuestionnaire request) {
-    return request.getAnswersDetails().stream().map(question -> {
+    return request.getQuestions().stream().map(question -> {
       return mapToPreguntasEnroll(question.getQuestion());
     }).toList();
   }

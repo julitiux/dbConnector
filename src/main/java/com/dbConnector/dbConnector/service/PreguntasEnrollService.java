@@ -29,7 +29,7 @@ public class PreguntasEnrollService {
 
   public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaireRequest request, String expediente) {
 
-    List<PreguntasEnroll> preguntasEnrolls = answerDetailsQuestion.mapToPreguntasEnrollList(request, expediente);
+    List<PreguntasEnroll> preguntasEnrolls = answerDetailsQuestion.mapToPreguntasEnrollListToCompare(request);
     List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
 
     return preguntasEnrollsSaved.equals(preguntasEnrolls);
@@ -48,8 +48,6 @@ public class PreguntasEnrollService {
 
   public List<PreguntasEnroll> createPreguntasEnroll(List<PreguntasEnroll> preguntasEnrolls, String expediente) {
 
-//    TODO: Preguntar que tipo de logica llevara: Que pasa cuando ya existen preguntas enroll para un expediente?
-//    TODO: El flujo correcto es actualizar las preguntas enroll si ya existen para el expediente, o crear nuevas si no existen.
     preguntasEnrolls.forEach(pregunta -> {
       pregunta.getId().setExpediente(expediente);
       pregunta.setEstatus("A");

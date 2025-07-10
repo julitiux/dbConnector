@@ -8,6 +8,7 @@ import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.http11.filters.VoidOutputFilter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,17 +72,13 @@ public class PreguntasEnrollController {
   }
 
   @PostMapping("/{employee_id}/validate_questionnaire")
-  public ResponseEntity<List<PreguntasEnroll>> processValidatePreguntasEnroll(
+  public ResponseEntity<Void> processValidatePreguntasEnroll(
     @PathVariable("employee_id") String expediente,
     @RequestBody WrapperPostEnrollmentQuestionnaire request) {
     log.info("Processing preguntas enroll for expediente: {}", expediente);
 
-    List<PreguntasEnroll> matching = preguntasEnrollService.validatePreguntasEnroll(request, expediente);
-
-    return Optional.of(matching)
-      .filter(list -> !list.isEmpty())
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.noContent().build());
+    Boolean matching = preguntasEnrollService.validatePreguntasEnroll(request, expediente);
+    return matching ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
   }
 
   @GetMapping("/{employee_id}/retrieve_subordinates")

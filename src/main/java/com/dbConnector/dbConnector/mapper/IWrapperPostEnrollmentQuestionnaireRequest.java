@@ -14,12 +14,13 @@ import java.util.List;
 public interface IWrapperPostEnrollmentQuestionnaireRequest {
 
   @Mapping(target = "id.noPregunta", source = "question.questionId")
+  @Mapping(target = "id.expediente", source = "expediente")
   @Mapping(target = "respuestaPregunta", source = "question.answer")
-  PreguntasEnroll mapToPreguntasEnroll(AnswersDetailsQuestion question);
+  PreguntasEnroll mapToPreguntasEnroll(AnswersDetailsQuestion question, String expediente);
 
-  default List<PreguntasEnroll> mapToPreguntasEnrollList(WrapperPostEnrollmentQuestionnaireRequest request) {
+  default List<PreguntasEnroll> mapToPreguntasEnrollList(WrapperPostEnrollmentQuestionnaireRequest request, String expediente) {
     return request.getQuestions().stream().map(question -> {
-      return mapToPreguntasEnroll(question.getQuestion());
+      return mapToPreguntasEnroll(question.getQuestion(), expediente);
     }).toList();
   }
 }

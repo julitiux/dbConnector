@@ -35,6 +35,16 @@ public class PreguntasEnrollService {
     return preguntasEnrollsSaved.equals(preguntasEnrolls);
   }
 
+  public List<PreguntasEnroll> createPreguntasEnroll(List<PreguntasEnroll> preguntasEnrolls, String expediente) {
+
+    preguntasEnrolls.forEach(pregunta -> {
+      pregunta.getId().setExpediente(expediente);
+      pregunta.setEstatus("A");
+      pregunta.setFechaHora(LocalDateTime.now().format(formatter));
+    });
+    return preguntasEnrollRepository.saveAll(preguntasEnrolls);
+  }
+
   public Boolean deletePreguntasEnrollByExpediente(String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
@@ -44,16 +54,6 @@ public class PreguntasEnrollService {
     } else {
       return false;
     }
-  }
-
-  public List<PreguntasEnroll> createPreguntasEnroll(List<PreguntasEnroll> preguntasEnrolls, String expediente) {
-
-    preguntasEnrolls.forEach(pregunta -> {
-      pregunta.getId().setExpediente(expediente);
-      pregunta.setEstatus("A");
-      pregunta.setFechaHora(LocalDateTime.now().format(formatter));
-    });
-    return preguntasEnrollRepository.saveAll(preguntasEnrolls);
   }
 
   public List<Integer> getPreguntasEnrollByExpediente(String expediente) {

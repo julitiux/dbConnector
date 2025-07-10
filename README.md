@@ -29,22 +29,22 @@ http GET http://localhost:8080/preguntas-enroll/EXP006/questionnaire
 
 http POST http://localhost:8080/preguntas-enroll/EXP002/validate_questionnaire \
   Content-Type:application/json \
-  <<< '[
-  {
-    "id": { "expediente": "EXP002", "noPregunta": 1 },
-    "respuestaPregunta": "No",
-    "estatus": "A",
-    "fechaHora": "2025-06-30 11:00",
-    "catalogoPreguntas": null
-  },
-  {
-    "id": { "expediente": "EXP002", "noPregunta": 4 },
-    "respuestaPregunta": "Polen",
-    "estatus": "A",
-    "fechaHora": "2025-06-30 11:05",
-    "catalogoPreguntas": null
-  }
-]'
+  <<< '{
+	"questions":[
+		{
+			"question": {
+				"questionId":"1",
+				"answer":"No"
+			}
+		},
+		{
+			"question": {
+				"questionId":"4",
+				"answer":"Polen"
+			}
+		}
+	]
+}'
 
 http GET http://localhost:8080/preguntas-enroll/EXP001/retrieve_subordinates
 ```

@@ -1,9 +1,9 @@
 package com.dbConnector.dbConnector.controller;
 
 
-import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
+import com.dbConnector.dbConnector.model.response.WrapperRetrieveSubordinateResponse;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
@@ -59,15 +59,15 @@ public class PreguntasEnrollController {
   }
 
   @GetMapping("/{employee_id}/retrieve_subordinates")
-  public ResponseEntity<List<String>> getSubordinadosByExpediente(@PathVariable("employee_id") String expediente) {
+  public ResponseEntity<WrapperRetrieveSubordinateResponse> getSubordinadosByExpediente(@PathVariable("employee_id") String expediente) {
     log.info("Fetching subordinados by expediente: {}", expediente);
 
-    List<String> subordinados = supervisorExpedienteService.getSubordinariosId(expediente);
-
-    return Optional.of(subordinados)
-      .filter(list -> !list.isEmpty())
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.noContent().build());
+    WrapperRetrieveSubordinateResponse response = supervisorExpedienteService.getSubordinariosId(expediente);
+    if (response.getSubordinates() != null && !response.getSubordinates().isEmpty()) {
+      return ResponseEntity.ok(response);
+    } else {
+      return ResponseEntity.noContent().build();
+    }
   }
 
   @DeleteMapping("/{employee_id}/delete")

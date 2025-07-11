@@ -37,6 +37,16 @@ public class PreguntasEnrollService {
     }
   }
 
+  public List<Integer> getPreguntasEnrollByExpediente(String expediente) {
+
+    List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
+    List<Integer> preguntasIds = new java.util.ArrayList<>(preguntasEnrolls.stream()
+      .map(pregunta -> pregunta.getId().getNoPregunta())
+      .toList());
+    Collections.shuffle(preguntasIds);
+    return preguntasIds.stream().limit(3).toList();
+  }
+
   public Boolean deletePreguntasEnrollByExpediente(String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
@@ -46,15 +56,5 @@ public class PreguntasEnrollService {
     } else {
       return false;
     }
-  }
-
-  public List<Integer> getPreguntasEnrollByExpediente(String expediente) {
-
-    List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
-    List<Integer> preguntasIds = new java.util.ArrayList<>(preguntasEnrolls.stream()
-      .map(pregunta -> pregunta.getId().getNoPregunta())
-      .toList());
-    Collections.shuffle(preguntasIds);
-    return preguntasIds.stream().limit(3).toList();
   }
 }

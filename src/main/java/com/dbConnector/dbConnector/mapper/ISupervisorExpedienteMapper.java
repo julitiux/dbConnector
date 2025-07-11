@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",
   nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT,
   nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT)
-public interface SupervisorExpedienteMapper {
+public interface ISupervisorExpedienteMapper {
 
   default WrapperRetrieveSubordinateResponse mapToWrapperRetrieveSubordinateResponse(List<SupervisorExpediente> supervisorExpedientes) {
 

@@ -3,6 +3,7 @@ package com.dbConnector.dbConnector.controller;
 
 import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
@@ -58,12 +59,11 @@ public class PreguntasEnrollController {
   }
 
   @GetMapping("/{status_id}/questions")
-  public ResponseEntity<List<CatalogoPreguntas>> getCatalogoPreguntasByEstatus(
+  public ResponseEntity<WrapperGetRetrieveQuestionsResponse> getCatalogoPreguntasByEstatus(
     @PathVariable("status_id") String estatusPregunta) {
     log.info("Fetching catalogo preguntas by estatus: {}", estatusPregunta);
 
-    List<CatalogoPreguntas> catalogoPreguntas = catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta);
-    return ResponseEntity.ok(catalogoPreguntas);
+    return ResponseEntity.ok(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta));
   }
 
   @GetMapping("/{employee_id}/questionnaire")

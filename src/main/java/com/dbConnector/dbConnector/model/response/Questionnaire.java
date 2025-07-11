@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class Questionnaire {
 
-  private QuestionnaireQuestion question:
+  private QuestionnaireQuestion question;
 
 }

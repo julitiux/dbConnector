@@ -1,7 +1,7 @@
 package com.dbConnector.dbConnector.service;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
-import com.dbConnector.dbConnector.mapper.IWrapperPostEnrollmentQuestionnaireMapper;
+import com.dbConnector.dbConnector.mapper.IPreguntasEnrollMapper;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import lombok.AllArgsConstructor;
@@ -17,18 +17,18 @@ import java.util.List;
 public class PreguntasEnrollService {
 
   private final PreguntasEnrollRepository preguntasEnrollRepository;
-  private final IWrapperPostEnrollmentQuestionnaireMapper iWrapperPostEnrollmentQuestionnaireMapper;
+  private final IPreguntasEnrollMapper iPreguntasEnrollMapper;
 
   public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaireRequest request, String expediente) {
 
-    List<PreguntasEnroll> preguntasEnrolls = iWrapperPostEnrollmentQuestionnaireMapper.mapToPreguntasEnrollListToCompare(request);
+    List<PreguntasEnroll> preguntasEnrolls = iPreguntasEnrollMapper.mapToPreguntasEnrollListToCompare(request);
     List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
     return preguntasEnrollsSaved.equals(preguntasEnrolls);
   }
 
   public Boolean createPreguntasEnroll(WrapperPostEnrollmentQuestionnaireRequest request, String expediente) {
 
-    List<PreguntasEnroll> preguntasEnrolls = iWrapperPostEnrollmentQuestionnaireMapper.mapToPreguntasEnrollListToSave(request, expediente);
+    List<PreguntasEnroll> preguntasEnrolls = iPreguntasEnrollMapper.mapToPreguntasEnrollListToSave(request, expediente);
     List<PreguntasEnroll> preguntasEnrollsCreated = preguntasEnrollRepository.saveAll(preguntasEnrolls);
     if (preguntasEnrollsCreated != null && !preguntasEnrollsCreated.isEmpty()) {
       return true;

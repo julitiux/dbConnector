@@ -14,7 +14,7 @@ import java.util.Locale;
   nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT,
   nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT,
   unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface IWrapperPostEnrollmentQuestionnaireMapper {
+public interface IPreguntasEnrollMapper {
 
   @Mapping(target = "id.noPregunta", source = "question.questionId")
   @Mapping(target = "respuestaPregunta", source = "question.answer")

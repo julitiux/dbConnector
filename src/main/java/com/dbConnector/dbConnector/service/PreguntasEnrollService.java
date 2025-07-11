@@ -3,6 +3,7 @@ package com.dbConnector.dbConnector.service;
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.mapper.IPreguntasEnrollMapper;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,14 +38,12 @@ public class PreguntasEnrollService {
     }
   }
 
-  public List<Integer> getPreguntasEnrollByExpediente(String expediente) {
+  public WrapperGetRetrieveEmployeeQuestionaireResponse getPreguntasEnrollByExpediente(String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
-    List<Integer> preguntasIds = new java.util.ArrayList<>(preguntasEnrolls.stream()
-      .map(pregunta -> pregunta.getId().getNoPregunta())
-      .toList());
-    Collections.shuffle(preguntasIds);
-    return preguntasIds.stream().limit(3).toList();
+    Collections.shuffle(preguntasEnrolls);
+    List<PreguntasEnroll> preguntasEnrolls3 = preguntasEnrolls.stream().limit(3).toList();
+    return iPreguntasEnrollMapper.mapToWrapperGetRetrieveEmployeeQuestionaireResponse(preguntasEnrolls3);
   }
 
   public Boolean deletePreguntasEnrollByExpediente(String expediente) {

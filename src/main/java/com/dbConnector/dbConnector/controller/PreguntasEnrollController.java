@@ -70,14 +70,6 @@ public class PreguntasEnrollController {
     }
   }
 
-  @DeleteMapping("/{employee_id}/delete")
-  public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
-    log.info("Deleting preguntas enroll for expediente: {}", expediente);
-
-    Boolean expedienteDeleted = preguntasEnrollService.deletePreguntasEnrollByExpediente(expediente);
-    return expedienteDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-  }
-
   @GetMapping("/{employee_id}/questionnaire")
   public ResponseEntity<List<Integer>> getPreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
     log.info("Fetching preguntas enroll by expediente: {}", expediente);
@@ -89,5 +81,13 @@ public class PreguntasEnrollController {
       .filter(list -> !list.isEmpty())
       .map(ResponseEntity::ok)
       .orElseGet(() -> ResponseEntity.noContent().build());
+  }
+
+  @DeleteMapping("/{employee_id}/delete")
+  public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
+    log.info("Deleting preguntas enroll for expediente: {}", expediente);
+
+    Boolean expedienteDeleted = preguntasEnrollService.deletePreguntasEnrollByExpediente(expediente);
+    return expedienteDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
   }
 }

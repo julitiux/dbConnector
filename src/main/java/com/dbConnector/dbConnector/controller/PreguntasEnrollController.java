@@ -2,6 +2,7 @@ package com.dbConnector.dbConnector.controller;
 
 
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
 import com.dbConnector.dbConnector.model.response.WrapperRetrieveSubordinateResponse;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
@@ -71,16 +72,15 @@ public class PreguntasEnrollController {
   }
 
   @GetMapping("/{employee_id}/questionnaire")
-  public ResponseEntity<List<Integer>> getPreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
+  public ResponseEntity<WrapperGetRetrieveEmployeeQuestionaireResponse> getPreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
     log.info("Fetching preguntas enroll by expediente: {}", expediente);
 
-    List<Integer> preguntasEnrolls = preguntasEnrollService.getPreguntasEnrollByExpediente(expediente);
-
-    log.info("{}", preguntasEnrolls.size());
-    return Optional.of(preguntasEnrolls)
-      .filter(list -> !list.isEmpty())
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.noContent().build());
+    WrapperGetRetrieveEmployeeQuestionaireResponse response = preguntasEnrollService.getPreguntasEnrollByExpediente(expediente);
+    if (response.getQuestions() != null && !response.getQuestions().isEmpty()) {
+      return ResponseEntity.ok(response);
+    } else {
+      return ResponseEntity.noContent().build();
+    }
   }
 
   @DeleteMapping("/{employee_id}/delete")

@@ -50,20 +50,32 @@ public class PreguntasEnrollController {
       ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
   }
 
-  @DeleteMapping("/{employee_id}/delete")
-  public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
-    log.info("Deleting preguntas enroll for expediente: {}", expediente);
-
-    Boolean expedienteDeleted = preguntasEnrollService.deletePreguntasEnrollByExpediente(expediente);
-    return expedienteDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-  }
-
   @GetMapping("/{status_id}/questions")
   public ResponseEntity<WrapperGetRetrieveQuestionsResponse> getCatalogoPreguntasByEstatus(
     @PathVariable("status_id") String estatusPregunta) {
     log.info("Fetching catalogo preguntas by estatus: {}", estatusPregunta);
 
     return ResponseEntity.ok(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta));
+  }
+
+  @GetMapping("/{employee_id}/retrieve_subordinates")
+  public ResponseEntity<List<String>> getSubordinadosByExpediente(@PathVariable("employee_id") String expediente) {
+    log.info("Fetching subordinados by expediente: {}", expediente);
+
+    List<String> subordinados = supervisorExpedienteService.getSubordinariosId(expediente);
+
+    return Optional.of(subordinados)
+      .filter(list -> !list.isEmpty())
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.noContent().build());
+  }
+
+  @DeleteMapping("/{employee_id}/delete")
+  public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
+    log.info("Deleting preguntas enroll for expediente: {}", expediente);
+
+    Boolean expedienteDeleted = preguntasEnrollService.deletePreguntasEnrollByExpediente(expediente);
+    return expedienteDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
   }
 
   @GetMapping("/{employee_id}/questionnaire")
@@ -74,18 +86,6 @@ public class PreguntasEnrollController {
 
     log.info("{}", preguntasEnrolls.size());
     return Optional.of(preguntasEnrolls)
-      .filter(list -> !list.isEmpty())
-      .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.noContent().build());
-  }
-
-  @GetMapping("/{employee_id}/retrieve_subordinates")
-  public ResponseEntity<List<String>> getSubordinadosByExpediente(@PathVariable("employee_id") String expediente) {
-    log.info("Fetching subordinados by expediente: {}", expediente);
-
-    List<String> subordinados = supervisorExpedienteService.getSubordinariosId(expediente);
-
-    return Optional.of(subordinados)
       .filter(list -> !list.isEmpty())
       .map(ResponseEntity::ok)
       .orElseGet(() -> ResponseEntity.noContent().build());

@@ -2,7 +2,7 @@ package com.dbConnector.dbConnector.service;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.mapper.IWrapperPostEnrollmentQuestionnaireMapper;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

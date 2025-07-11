@@ -1,8 +1,8 @@
 package com.dbConnector.dbConnector.mapper;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
-import com.dbConnector.dbConnector.model.AnswersDetailsQuestion;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.request.AnswersDetailsQuestion;
+import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import org.mapstruct.*;
 
 import java.time.LocalDateTime;

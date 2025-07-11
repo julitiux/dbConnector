@@ -1,4 +1,4 @@
-package com.dbConnector.dbConnector.model;
+package com.dbConnector.dbConnector.model.request;
 
 import lombok.Data;
 

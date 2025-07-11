@@ -2,13 +2,11 @@ package com.dbConnector.dbConnector.controller;
 
 
 import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
-import com.dbConnector.dbConnector.domain.PreguntasEnroll;
-import com.dbConnector.dbConnector.model.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

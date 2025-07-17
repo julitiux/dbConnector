@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/preguntas-enroll")
-public class PreguntasEnrollController {
+@RequestMapping(value = "/customer_management")
+public class CustomerManagementController {
 
   private final PreguntasEnrollService preguntasEnrollService;
   private final CatalogoPreguntasService catalogoPreguntasService;
   private final SupervisorExpedienteService supervisorExpedienteService;
 
-  public PreguntasEnrollController(PreguntasEnrollService preguntasEnrollService, CatalogoPreguntasService catalogoPreguntasService, SupervisorExpedienteService supervisorExpedienteService) {
+  public CustomerManagementController(PreguntasEnrollService preguntasEnrollService, CatalogoPreguntasService catalogoPreguntasService, SupervisorExpedienteService supervisorExpedienteService) {
     this.preguntasEnrollService = preguntasEnrollService;
     this.catalogoPreguntasService = catalogoPreguntasService;
     this.supervisorExpedienteService = supervisorExpedienteService;

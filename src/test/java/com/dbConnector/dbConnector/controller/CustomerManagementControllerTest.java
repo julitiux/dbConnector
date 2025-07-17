@@ -54,7 +54,7 @@ class CustomerManagementControllerTest {
   }
 
   @Test
-  void createPreguntasEnroll() {
+  void createPreguntasEnrollWhenReturnCreated() {
 
     final String employee_id = "ANY_ID";
     final WrapperPostEnrollmentQuestionnaireRequest request = new WrapperPostEnrollmentQuestionnaireRequest();

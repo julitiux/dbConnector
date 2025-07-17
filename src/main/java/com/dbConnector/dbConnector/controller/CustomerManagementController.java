@@ -8,6 +8,7 @@ import com.dbConnector.dbConnector.model.response.WrapperRetrieveSubordinateResp
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping(value = "/customer_management")
 public class CustomerManagementController {
 
   private final PreguntasEnrollService preguntasEnrollService;
   private final CatalogoPreguntasService catalogoPreguntasService;
   private final SupervisorExpedienteService supervisorExpedienteService;
-
-  public CustomerManagementController(PreguntasEnrollService preguntasEnrollService, CatalogoPreguntasService catalogoPreguntasService, SupervisorExpedienteService supervisorExpedienteService) {
-    this.preguntasEnrollService = preguntasEnrollService;
-    this.catalogoPreguntasService = catalogoPreguntasService;
-    this.supervisorExpedienteService = supervisorExpedienteService;
-  }
-
+  
   @PostMapping("/{employee_id}/validate_questionnaire")
   public ResponseEntity<Void> processValidatePreguntasEnroll(
     @PathVariable("employee_id") String expediente, @RequestBody WrapperPostEnrollmentQuestionnaireRequest request) {

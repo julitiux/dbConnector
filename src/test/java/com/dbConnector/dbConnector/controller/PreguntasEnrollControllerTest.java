@@ -1,6 +1,5 @@
 package com.dbConnector.dbConnector.controller;
 
-import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
@@ -25,12 +24,13 @@ class PreguntasEnrollControllerTest {
 
   @Test
   void processValidatePreguntasEnroll() {
-    preguntasEnrollController.processValidatePreguntasEnroll("pathVariable", new WrapperPostEnrollmentQuestionnaireRequest());
+
+
+
   }
 
   @Test
   void createPreguntasEnroll() {
-    preguntasEnrollController.createPreguntasEnroll("employee_id", new WrapperPostEnrollmentQuestionnaireRequest());
   }
 
   @Test

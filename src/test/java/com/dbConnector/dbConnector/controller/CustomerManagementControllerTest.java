@@ -41,6 +41,19 @@ class CustomerManagementControllerTest {
   }
 
   @Test
+  void testProcessValidatePreguntasEnrollWhenReturnNotFound() {
+
+    final String employee_id = "";
+    final WrapperPostEnrollmentQuestionnaireRequest request = new WrapperPostEnrollmentQuestionnaireRequest();
+    when(preguntasEnrollService.validatePreguntasEnroll(request, employee_id)).thenReturn(Boolean.FALSE);
+
+    ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, request);
+
+    assertEquals(404, response.getStatusCode().value(), "should be return HTTP 404");
+    assertFalse(response.hasBody(), "dont has body");
+  }
+
+  @Test
   void createPreguntasEnroll() {
   }
 

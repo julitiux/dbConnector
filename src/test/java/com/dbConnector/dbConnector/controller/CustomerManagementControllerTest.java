@@ -65,7 +65,20 @@ class CustomerManagementControllerTest {
 
     assertEquals(201, response.getStatusCode().value(), "should be return HTTP 201");
     assertFalse(response.hasBody(), "dont has body");
+  }
 
+  @Test
+  void createPreguntasEnrollWhenReturnBadRequest() {
+
+    final String employee_id = "ANY_ID";
+    final WrapperPostEnrollmentQuestionnaireRequest request = new WrapperPostEnrollmentQuestionnaireRequest();
+
+    when(preguntasEnrollService.createPreguntasEnroll(request, employee_id)).thenReturn(Boolean.FALSE);
+
+    ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, request);
+
+    assertEquals(400, response.getStatusCode().value(), "should be return HTTP 400");
+    assertFalse(response.hasBody(), "dont has body");
   }
 
   @Test

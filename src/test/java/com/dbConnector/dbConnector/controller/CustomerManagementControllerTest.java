@@ -1,6 +1,9 @@
 package com.dbConnector.dbConnector.controller;
 
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.response.QuestionsDetails;
+import com.dbConnector.dbConnector.model.response.QuestionsDetailsQuestion;
+import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
@@ -11,9 +14,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.when;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerManagementControllerTest {
@@ -82,7 +86,39 @@ class CustomerManagementControllerTest {
   }
 
   @Test
-  void getCatalogoPreguntasByEstatus() {
+  void getCatalogoPreguntasByEstatusWhenReturnOkAndTheResponseIsNotEmpty() {
+
+    final String estatusPregunta = "A";
+    QuestionsDetailsQuestion questionsDetailsQuestion = mock(QuestionsDetailsQuestion.class);
+    lenient().when(questionsDetailsQuestion.getQuestionId()).thenReturn("1");
+    lenient().when(questionsDetailsQuestion.getDescription()).thenReturn("Fist question:");
+    QuestionsDetails questionsDetails = mock(QuestionsDetails.class);
+    lenient().when(questionsDetails.getQuestion()).thenReturn(questionsDetailsQuestion);
+    WrapperGetRetrieveQuestionsResponse wrapperGetRetrieveQuestionsResponse = mock(WrapperGetRetrieveQuestionsResponse.class);
+    lenient().when(wrapperGetRetrieveQuestionsResponse.getQuestions()).thenReturn(List.of(questionsDetails));
+
+    when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapperGetRetrieveQuestionsResponse);
+
+    ResponseEntity<WrapperGetRetrieveQuestionsResponse> response =
+      customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);
+
+    assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
+    assertTrue(response.hasBody(), "has body");
+  }
+
+  @Test
+  void getCatalogoPreguntasByEstatusWhenReturnOkAndTheResponseIsEmpty() {
+
+    final String estatusPregunta = "A";
+    final WrapperGetRetrieveQuestionsResponse wrapperGetRetrieveQuestionsResponse = mock(WrapperGetRetrieveQuestionsResponse.class);
+
+    when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapperGetRetrieveQuestionsResponse);
+
+    ResponseEntity<WrapperGetRetrieveQuestionsResponse> response =
+      customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);
+
+    assertEquals(404, response.getStatusCode().value(), "should be return HTTP 404");
+    assertFalse(response.hasBody(), "has not body");
   }
 
   @Test

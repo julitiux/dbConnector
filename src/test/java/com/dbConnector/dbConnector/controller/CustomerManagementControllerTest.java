@@ -156,6 +156,14 @@ class CustomerManagementControllerTest {
 
   @Test
   void getPreguntasEnrollByExpedienteWhenReturnIsNoContent() {
+    final String employee_id = "ANY_ID";
+
+    WrapperGetRetrieveEmployeeQuestionaireResponse wrapperGetRetrieveEmployeeQuestionaireResponse =  mock(WrapperGetRetrieveEmployeeQuestionaireResponse.class);
+    when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapperGetRetrieveEmployeeQuestionaireResponse);
+
+    ResponseEntity<WrapperGetRetrieveEmployeeQuestionaireResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
+    assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
+    assertFalse(response.hasBody(), "has body");
   }
 
   @Test

@@ -139,6 +139,15 @@ class CustomerManagementControllerTest {
 
   @Test
   void getSubordinadosByExpedienteWhenReturnIsNotContent() {
+    final String employee_id = "ANY_ID";
+
+    WrapperRetrieveSubordinateResponse wrapperRetrieveSubordinateResponse = mock(WrapperRetrieveSubordinateResponse.class);
+
+    when(supervisorExpedienteService.getSubordinariosId(employee_id)).thenReturn(wrapperRetrieveSubordinateResponse);
+
+    ResponseEntity<WrapperRetrieveSubordinateResponse> response = customerManagementController.getSubordinadosByExpediente(employee_id);
+    assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
+    assertFalse(response.hasBody(), "has not body");
   }
 
   @Test

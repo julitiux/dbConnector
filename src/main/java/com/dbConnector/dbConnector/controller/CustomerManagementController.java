@@ -23,7 +23,7 @@ public class CustomerManagementController {
   private final PreguntasEnrollService preguntasEnrollService;
   private final CatalogoPreguntasService catalogoPreguntasService;
   private final SupervisorExpedienteService supervisorExpedienteService;
-  
+
   @PostMapping("/{employee_id}/validate_questionnaire")
   public ResponseEntity<Void> processValidatePreguntasEnroll(
     @PathVariable("employee_id") String expediente, @RequestBody WrapperPostEnrollmentQuestionnaireRequest request) {
@@ -49,7 +49,12 @@ public class CustomerManagementController {
     @PathVariable("status_id") String estatusPregunta) {
     log.info("Fetching catalogo preguntas by estatus: {}", estatusPregunta);
 
-    return ResponseEntity.ok(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta));
+    WrapperGetRetrieveQuestionsResponse response = catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta);
+    if (response.getQuestions() != null && !response.getQuestions().isEmpty()) {
+      return ResponseEntity.ok(response);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 
   @GetMapping("/{employee_id}/retrieve_subordinates")

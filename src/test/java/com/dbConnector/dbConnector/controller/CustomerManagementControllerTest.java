@@ -151,7 +151,11 @@ class CustomerManagementControllerTest {
   }
 
   @Test
-  void getPreguntasEnrollByExpediente() {
+  void getPreguntasEnrollByExpedienteWhenReturnIsOk() {
+  }
+
+  @Test
+  void getPreguntasEnrollByExpedienteWhenReturnIsNoContent() {
   }
 
   @Test

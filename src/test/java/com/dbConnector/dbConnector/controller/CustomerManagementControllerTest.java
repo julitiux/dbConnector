@@ -158,6 +158,10 @@ class CustomerManagementControllerTest {
   }
 
   @Test
-  void deletePreguntasEnrollByExpediente() {
+  void deletePreguntasEnrollByExpedienteWhenReturnNoContent() {
+  }
+
+  @Test
+  void deletePreguntasEnrollByExpedienteWhenReturnNotFound() {
   }
 }

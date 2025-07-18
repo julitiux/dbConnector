@@ -169,5 +169,11 @@ class CustomerManagementControllerTest {
 
   @Test
   void deletePreguntasEnrollByExpedienteWhenReturnNotFound() {
+    final String employee_id = "ANY_ID";
+    when(preguntasEnrollService.deletePreguntasEnrollByExpediente(employee_id)).thenReturn(Boolean.FALSE);
+
+    ResponseEntity<Void> response = customerManagementController.deletePreguntasEnrollByExpediente(employee_id);
+    assertEquals(404, response.getStatusCode().value(), "should be return HTTP 404");
+    assertFalse(response.hasBody(), "no has body");
   }
 }

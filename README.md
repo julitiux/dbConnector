@@ -17,7 +17,7 @@ docker exec -it dbConnector psql -U user -d db
 
 ## httpie command delete
 ```shell
-http POST http://localhost:8080/preguntas-enroll/EXP002/validate_questionnaire \
+http POST http://localhost:8080/customer_management/EXP002/validate_questionnaire \
   Content-Type:application/json \
   <<< '{
 	"questions":[
@@ -36,7 +36,7 @@ http POST http://localhost:8080/preguntas-enroll/EXP002/validate_questionnaire \
 	]
 }'
 
-http POST http://localhost:8080/preguntas-enroll/EXP010/enrollment_questionnaire \
+http POST http://localhost:8080/customer_management/EXP010/enrollment_questionnaire \
   Content-Type:application/json \
   <<< '{
 	"questions":[
@@ -55,13 +55,13 @@ http POST http://localhost:8080/preguntas-enroll/EXP010/enrollment_questionnaire
 	]
 }'
 
-http GET http://localhost:8080/preguntas-enroll/A/questions
+http GET http://localhost:8080/customer_management/A/questions
 
-http GET http://localhost:8080/preguntas-enroll/EXP001/retrieve_subordinates
+http GET http://localhost:8080/customer_management/EXP001/retrieve_subordinates
 
-http GET http://localhost:8080/preguntas-enroll/EXP006/questionnaire
+http GET http://localhost:8080/customer_management/EXP006/questionnaire
 
-http DELETE http://localhost:8080/preguntas-enroll/EXP002/delete
+http DELETE http://localhost:8080/customer_management/EXP002/delete
 ```
 
 ## command postgreSQL

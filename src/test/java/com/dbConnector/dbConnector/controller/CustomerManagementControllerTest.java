@@ -1,9 +1,7 @@
 package com.dbConnector.dbConnector.controller;
 
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
-import com.dbConnector.dbConnector.model.response.QuestionsDetails;
-import com.dbConnector.dbConnector.model.response.QuestionsDetailsQuestion;
-import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
+import com.dbConnector.dbConnector.model.response.*;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
 import com.dbConnector.dbConnector.service.PreguntasEnrollService;
 import com.dbConnector.dbConnector.service.SupervisorExpedienteService;
@@ -122,7 +120,25 @@ class CustomerManagementControllerTest {
   }
 
   @Test
-  void getSubordinadosByExpediente() {
+  void getSubordinadosByExpedienteWhenReturnIsOk() {
+    final String employee_id = "ANY_ID";
+
+    ListSubordinatesEmployee listSubordinatesEmployee = mock(ListSubordinatesEmployee.class);
+    lenient().when(listSubordinatesEmployee.getNumber()).thenReturn("1");
+    ListSubordinate listSubordinate = mock(ListSubordinate.class);
+    lenient().when(listSubordinate.getEmployee()).thenReturn(listSubordinatesEmployee);
+    WrapperRetrieveSubordinateResponse wrapperRetrieveSubordinateResponse = mock(WrapperRetrieveSubordinateResponse.class);
+    lenient().when(wrapperRetrieveSubordinateResponse.getSubordinates()).thenReturn(List.of(listSubordinate));
+
+    when(supervisorExpedienteService.getSubordinariosId(employee_id)).thenReturn(wrapperRetrieveSubordinateResponse);
+
+    ResponseEntity<WrapperRetrieveSubordinateResponse> response = customerManagementController.getSubordinadosByExpediente(employee_id);
+    assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
+    assertTrue(response.hasBody(), "has body");
+  }
+
+  @Test
+  void getSubordinadosByExpedienteWhenReturnIsNotContent() {
   }
 
   @Test

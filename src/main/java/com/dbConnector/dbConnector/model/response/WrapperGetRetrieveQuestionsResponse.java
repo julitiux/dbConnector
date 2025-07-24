@@ -9,6 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 public class WrapperGetRetrieveQuestionsResponse {
 
-  private List<QuestionsDetails> questions;
+  private List<WrapperQuestions> questions;
 
 }

@@ -51,7 +51,7 @@ http GET http://localhost:8080/customer_management/questions?statusId=A
 
 http GET http://localhost:8080/customer_management/EXP001/subordinates
 
-http GET http://localhost:8080/customer_management/EXP006/questionnaire
+http GET http://localhost:8080/customer_management/EXP006/questions
 
 http DELETE http://localhost:8080/customer_management/EXP002/delete
 ```

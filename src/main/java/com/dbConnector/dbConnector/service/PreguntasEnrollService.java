@@ -2,6 +2,7 @@ package com.dbConnector.dbConnector.service;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.mapper.IPreguntasEnrollMapper;
+import com.dbConnector.dbConnector.model.domain.PreguntaDescripcionDTO;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionsResponse;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
@@ -40,9 +41,9 @@ public class PreguntasEnrollService {
 
   public WrapperGetRetrieveEmployeeQuestionsResponse getPreguntasEnrollByExpediente(String expediente) {
 
-    List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
+    List<PreguntaDescripcionDTO> preguntasEnrolls = preguntasEnrollRepository.findPreguntasYDescripcionByExpediente(expediente);
     Collections.shuffle(preguntasEnrolls);
-    List<PreguntasEnroll> preguntasEnrolls3 = preguntasEnrolls.stream().limit(3).toList();
+    List<PreguntaDescripcionDTO> preguntasEnrolls3 = preguntasEnrolls.stream().limit(3).toList();
     return iPreguntasEnrollMapper.mapToWrapperGetRetrieveEmployeeQuestionaireResponse(preguntasEnrolls3);
   }
 

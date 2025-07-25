@@ -1,6 +1,7 @@
 package com.dbConnector.dbConnector.mapper;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
+import com.dbConnector.dbConnector.model.domain.PreguntaDescripcionDTO;
 import com.dbConnector.dbConnector.model.request.WrapperAnswer;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionsResponse;
@@ -47,11 +48,11 @@ public interface IPreguntasEnrollMapper {
     return LocalDateTime.now().format(formatter);
   }
 
-  default WrapperGetRetrieveEmployeeQuestionsResponse mapToWrapperGetRetrieveEmployeeQuestionaireResponse(List<PreguntasEnroll> preguntasEnrolls) {
+  default WrapperGetRetrieveEmployeeQuestionsResponse mapToWrapperGetRetrieveEmployeeQuestionaireResponse(List<PreguntaDescripcionDTO> preguntasEnrolls) {
 
     List<WrapperQuestions> questions =
       preguntasEnrolls.stream()
-        .map(pregunta -> new WrapperQuestions(pregunta.getId().getNoPregunta().toString(), "otro paramqtro aqui"))
+        .map(pregunta -> new WrapperQuestions(pregunta.getNoPregunta().toString(), pregunta.getDescPregunta()))
         .toList();
     return new WrapperGetRetrieveEmployeeQuestionsResponse(questions);
   }

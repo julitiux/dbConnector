@@ -1,6 +1,5 @@
 package com.dbConnector.dbConnector.controller;
 
-
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionsResponse;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
@@ -81,7 +80,7 @@ public class CustomerManagementController {
     }
   }
 
-  @DeleteMapping("/{employee_id}/delete")
+  @DeleteMapping("/{employee_id}/questions")
   public ResponseEntity<Void> deletePreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
     log.info("Deleting preguntas enroll for expediente: {}", expediente);
 

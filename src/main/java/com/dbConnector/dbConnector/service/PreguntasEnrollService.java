@@ -2,10 +2,7 @@ package com.dbConnector.dbConnector.service;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.mapper.IPreguntasEnrollMapper;
-import com.dbConnector.dbConnector.model.domain.PreguntaDescripcionDTO;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
-import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
-import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionsResponse;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import lombok.AllArgsConstructor;

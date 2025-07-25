@@ -32,21 +32,17 @@ http POST http://localhost:8080/customer_management/EXP002/questions/validate \
 	]
 }'
 
-http POST http://localhost:8080/customer_management/EXP010/enrollment_questionnaire \
+http POST http://localhost:8080/customer_management/EXP010/enroll_questions \
   Content-Type:application/json \
   <<< '{
 	"questions":[
 		{
-			"question": {
-				"questionId":"2",
-				"answer":"Yes"
-			}
+			"questionId":"2",
+			"answer":"Yes"
 		},
 		{
-			"question": {
-				"questionId":"4",
-				"answer":"Bee"
-			}
+			"questionId":"4",
+			"answer":"Bee"
 		}
 	]
 }'

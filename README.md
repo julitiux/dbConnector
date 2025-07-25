@@ -17,21 +17,17 @@ docker exec -it dbConnector psql -U user -d db
 
 ## httpie command delete
 ```shell
-http POST http://localhost:8080/customer_management/EXP002/validate_questionnaire \
+http POST http://localhost:8080/customer_management/EXP002/questions/validate \
   Content-Type:application/json \
   <<< '{
 	"questions":[
 		{
-			"question": {
-				"questionId":"1",
-				"answer":"No"
-			}
+			"questionId":"1",
+			"answer":"No"
 		},
 		{
-			"question": {
-				"questionId":"4",
-				"answer":"Polen"
-			}
+			"questionId":"4",
+			"answer":"Polen"
 		}
 	]
 }'

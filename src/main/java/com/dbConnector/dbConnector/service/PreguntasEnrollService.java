@@ -3,6 +3,7 @@ package com.dbConnector.dbConnector.service;
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.mapper.IPreguntasEnrollMapper;
 import com.dbConnector.dbConnector.model.domain.PreguntaDescripcionDTO;
+import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
@@ -21,14 +22,14 @@ public class PreguntasEnrollService {
   private final PreguntasEnrollRepository preguntasEnrollRepository;
   private final IPreguntasEnrollMapper iPreguntasEnrollMapper;
 
-  public Boolean validatePreguntasEnroll(WrapperPostEnrollmentQuestionnaireRequest request, String expediente) {
+  public Boolean validatePreguntasEnroll(WrapperPostEnrollQuestionsRequest request, String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = iPreguntasEnrollMapper.mapToPreguntasEnrollListToCompare(request);
     List<PreguntasEnroll> preguntasEnrollsSaved = preguntasEnrollRepository.findByIdExpediente(expediente);
     return preguntasEnrollsSaved.equals(preguntasEnrolls);
   }
 
-  public Boolean createPreguntasEnroll(WrapperPostEnrollmentQuestionnaireRequest request, String expediente) {
+  public Boolean createPreguntasEnroll(WrapperPostEnrollQuestionsRequest request, String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = iPreguntasEnrollMapper.mapToPreguntasEnrollListToSave(request, expediente);
     List<PreguntasEnroll> preguntasEnrollsCreated = preguntasEnrollRepository.saveAll(preguntasEnrolls);

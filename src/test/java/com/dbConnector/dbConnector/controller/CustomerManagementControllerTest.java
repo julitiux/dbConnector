@@ -1,5 +1,6 @@
 package com.dbConnector.dbConnector.controller;
 
+import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.model.response.*;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
@@ -32,7 +33,7 @@ class CustomerManagementControllerTest {
   @Test
   void testProcessValidatePreguntasEnrollWhenReturnOk() {
     final String employee_id = "ANY_ID";
-    final WrapperPostEnrollmentQuestionnaireRequest request = new WrapperPostEnrollmentQuestionnaireRequest();
+    final WrapperPostEnrollQuestionsRequest request = new WrapperPostEnrollQuestionsRequest();
     when(preguntasEnrollService.validatePreguntasEnroll(request, employee_id)).thenReturn(Boolean.TRUE);
 
     ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, request);
@@ -43,18 +44,18 @@ class CustomerManagementControllerTest {
   @Test
   void testProcessValidatePreguntasEnrollWhenReturnNotFound() {
     final String employee_id = "ANY_ID";
-    final WrapperPostEnrollmentQuestionnaireRequest request = new WrapperPostEnrollmentQuestionnaireRequest();
+    final WrapperPostEnrollQuestionsRequest request = new WrapperPostEnrollQuestionsRequest();
     when(preguntasEnrollService.validatePreguntasEnroll(request, employee_id)).thenReturn(Boolean.FALSE);
 
     ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, request);
-    assertEquals(404, response.getStatusCode().value(), "should be return HTTP 404");
+    assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
     assertFalse(response.hasBody(), "dont has body");
   }
 
   @Test
   void createPreguntasEnrollWhenReturnCreated() {
     final String employee_id = "ANY_ID";
-    final WrapperPostEnrollmentQuestionnaireRequest request = new WrapperPostEnrollmentQuestionnaireRequest();
+    final WrapperPostEnrollQuestionsRequest request = new WrapperPostEnrollQuestionsRequest();
     when(preguntasEnrollService.createPreguntasEnroll(request, employee_id)).thenReturn(Boolean.TRUE);
 
     ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, request);
@@ -65,7 +66,7 @@ class CustomerManagementControllerTest {
   @Test
   void createPreguntasEnrollWhenReturnBadRequest() {
     final String employee_id = "ANY_ID";
-    final WrapperPostEnrollmentQuestionnaireRequest request = new WrapperPostEnrollmentQuestionnaireRequest();
+    final WrapperPostEnrollQuestionsRequest request = new WrapperPostEnrollQuestionsRequest();
     when(preguntasEnrollService.createPreguntasEnroll(request, employee_id)).thenReturn(Boolean.FALSE);
 
     ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, request);
@@ -76,14 +77,12 @@ class CustomerManagementControllerTest {
   @Test
   void getCatalogoPreguntasByEstatusWhenReturnOkAndTheResponseIsNotEmpty() {
     final String estatusPregunta = "A";
-    QuestionsDetailsQuestion questionsDetailsQuestion = mock(QuestionsDetailsQuestion.class);
-    lenient().when(questionsDetailsQuestion.getQuestionId()).thenReturn("1");
-    lenient().when(questionsDetailsQuestion.getDescription()).thenReturn("Fist question:");
-    QuestionsDetails questionsDetails = mock(QuestionsDetails.class);
-    lenient().when(questionsDetails.getQuestion()).thenReturn(questionsDetailsQuestion);
-    WrapperGetRetrieveQuestionsResponse wrapperGetRetrieveQuestionsResponse = mock(WrapperGetRetrieveQuestionsResponse.class);
-    lenient().when(wrapperGetRetrieveQuestionsResponse.getQuestions()).thenReturn(List.of(questionsDetails));
-    when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapperGetRetrieveQuestionsResponse);
+    WrapperQuestions questions = mock(WrapperQuestions.class);
+    lenient().when(questions.getQuestionId()).thenReturn("1");
+    lenient().when(questions.getDescription()).thenReturn("Fist question:");
+    WrapperGetRetrieveQuestionsResponse wrapper = mock(WrapperGetRetrieveQuestionsResponse.class);
+    lenient().when(wrapper.getQuestions()).thenReturn(List.of(questions));
+    when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapper);
 
     ResponseEntity<WrapperGetRetrieveQuestionsResponse> response =
       customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);

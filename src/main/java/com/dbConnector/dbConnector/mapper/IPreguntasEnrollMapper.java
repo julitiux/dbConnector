@@ -1,8 +1,8 @@
 package com.dbConnector.dbConnector.mapper;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
-import com.dbConnector.dbConnector.model.request.AnswersDetailsQuestion;
-import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.request.WrapperAnswer;
+import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
 import com.dbConnector.dbConnector.model.response.Questionnaire;
 import com.dbConnector.dbConnector.model.response.QuestionnaireQuestion;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
@@ -19,27 +19,27 @@ import java.util.Locale;
   unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IPreguntasEnrollMapper {
 
-  @Mapping(target = "id.noPregunta", source = "question.questionId")
-  @Mapping(target = "respuestaPregunta", source = "question.answer")
-  PreguntasEnroll mapToPreguntasEnrollToCompare(AnswersDetailsQuestion question);
+  @Mapping(target = "id.noPregunta", source = "answer.questionId")
+  @Mapping(target = "respuestaPregunta", source = "answer.answer")
+  PreguntasEnroll mapToPreguntasEnrollToCompare(WrapperAnswer answer);
 
-  @Mapping(target = "id.noPregunta", source = "question.questionId")
+  @Mapping(target = "id.noPregunta", source = "answer.questionId")
   @Mapping(target = "id.expediente", source = "expediente")
-  @Mapping(target = "respuestaPregunta", source = "question.answer")
+  @Mapping(target = "respuestaPregunta", source = "answer.answer")
   @Mapping(target = "estatus", constant = "A")
   @Mapping(target = "fechaHora", expression = "java(this.getFechaHora())")
-  PreguntasEnroll mapToPreguntasEnrollToSave(AnswersDetailsQuestion question, String expediente);
+  PreguntasEnroll mapToPreguntasEnrollToSave(WrapperAnswer answer, String expediente);
 
-  default List<PreguntasEnroll> mapToPreguntasEnrollListToCompare(WrapperPostEnrollmentQuestionnaireRequest request) {
-    return request.getQuestions().stream().map(question -> {
-      return mapToPreguntasEnrollToCompare(question.getQuestion());
-    }).toList();
+  default List<PreguntasEnroll> mapToPreguntasEnrollListToCompare(WrapperPostEnrollQuestionsRequest request) {
+    return request.getQuestions().stream()
+      .map(this::mapToPreguntasEnrollToCompare)
+      .toList();
   }
 
-  default List<PreguntasEnroll> mapToPreguntasEnrollListToSave(WrapperPostEnrollmentQuestionnaireRequest request, String expediente) {
-    return request.getQuestions().stream().map(question -> {
-      return mapToPreguntasEnrollToSave(question.getQuestion(), expediente);
-    }).toList();
+  default List<PreguntasEnroll> mapToPreguntasEnrollListToSave(WrapperPostEnrollQuestionsRequest request, String expediente) {
+    return request.getQuestions().stream()
+      .map(answer -> mapToPreguntasEnrollToSave(answer, expediente))
+      .toList();
   }
 
   @Named("getFechaHora")

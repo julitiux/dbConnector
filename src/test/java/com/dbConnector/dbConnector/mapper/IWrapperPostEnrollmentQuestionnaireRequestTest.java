@@ -1,9 +1,7 @@
 package com.dbConnector.dbConnector.mapper;
 
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
-import com.dbConnector.dbConnector.model.request.AnswersDetails;
-import com.dbConnector.dbConnector.model.request.AnswersDetailsQuestion;
-import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.request.*;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -22,12 +20,12 @@ class IWrapperPostEnrollmentQuestionnaireRequestTest {
   @Test
   void to_withValidWrapper_returnsMappedList() {
     // Arrange
-    AnswersDetailsQuestion question = mock(AnswersDetailsQuestion.class);
-    when(question.getQuestionId()).thenReturn("2");
-    when(question.getAnswer()).thenReturn("No");
+    WrapperAnswer wrapperAnswer = mock(WrapperAnswer.class);
+    when(wrapperAnswer.getQuestionId()).thenReturn("2");
+    when(wrapperAnswer.getAnswer()).thenReturn("No");
 
     // Act
-    PreguntasEnroll result = mapper.mapToPreguntasEnrollToCompare(question);
+    PreguntasEnroll result = mapper.mapToPreguntasEnrollToCompare(wrapperAnswer);
 
     // Assert
     assertThat(result).isNotNull();
@@ -39,15 +37,12 @@ class IWrapperPostEnrollmentQuestionnaireRequestTest {
   @Test
   void toPreguntasEnroll_withValidWrapper_returnsMappedList() {
     // Arrange
-    AnswersDetailsQuestion question = mock(AnswersDetailsQuestion.class);
-    when(question.getQuestionId()).thenReturn("5");
-    when(question.getAnswer()).thenReturn("Yes");
+    WrapperAnswer wrapperAnswer = mock(WrapperAnswer.class);
+    when(wrapperAnswer.getQuestionId()).thenReturn("5");
+    when(wrapperAnswer.getAnswer()).thenReturn("Yes");
 
-    AnswersDetails details = mock(AnswersDetails.class);
-    when(details.getQuestion()).thenReturn(question);
-
-    WrapperPostEnrollmentQuestionnaireRequest wrapper = mock(WrapperPostEnrollmentQuestionnaireRequest.class);
-    when(wrapper.getQuestions()).thenReturn(List.of(details));
+    WrapperPostEnrollQuestionsRequest wrapper = mock(WrapperPostEnrollQuestionsRequest.class);
+    when(wrapper.getQuestions()).thenReturn(List.of(wrapperAnswer));
 
     // Act
     List<PreguntasEnroll> result = mapper.mapToPreguntasEnrollListToCompare(wrapper);

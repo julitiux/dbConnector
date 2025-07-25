@@ -4,6 +4,7 @@ import com.dbConnector.dbConnector.domain.CatalogoPreguntas;
 import com.dbConnector.dbConnector.model.response.QuestionsDetails;
 import com.dbConnector.dbConnector.model.response.QuestionsDetailsQuestion;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
+import com.dbConnector.dbConnector.model.response.WrapperQuestions;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueMappingStrategy;
@@ -18,13 +19,14 @@ public interface ICatalogoPreguntasMapper {
 
   @Mapping(target = "questionId", source = "noPregunta")
   @Mapping(target = "description", source = "descPregunta")
-  QuestionsDetailsQuestion mapToQuestionsDetailsQuestion(CatalogoPreguntas preguntas);
+  WrapperQuestions mapToQuestionsDetailsQuestion(CatalogoPreguntas preguntas);
 
 
   default WrapperGetRetrieveQuestionsResponse mapToWrapperGetRetrieveQuestionsResponse(List<CatalogoPreguntas> preguntas) {
 
-    List<QuestionsDetails> questions = preguntas.stream()
-      .map(pregunta -> new QuestionsDetails(mapToQuestionsDetailsQuestion(pregunta))).toList();
+    List<WrapperQuestions> questions = preguntas.stream()
+      .map(this::mapToQuestionsDetailsQuestion)
+      .toList();
     return new WrapperGetRetrieveQuestionsResponse(questions);
   }
 }

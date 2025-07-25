@@ -1,7 +1,7 @@
 package com.dbConnector.dbConnector.controller;
 
 
-import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
+import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
 import com.dbConnector.dbConnector.model.response.WrapperRetrieveSubordinateResponse;
@@ -24,18 +24,18 @@ public class CustomerManagementController {
   private final CatalogoPreguntasService catalogoPreguntasService;
   private final SupervisorExpedienteService supervisorExpedienteService;
 
-  @PostMapping("/{employee_id}/validate_questionnaire")
+  @PostMapping("/{employee_id}/questions/validate")
   public ResponseEntity<Void> processValidatePreguntasEnroll(
-    @PathVariable("employee_id") String expediente, @RequestBody WrapperPostEnrollmentQuestionnaireRequest request) {
+    @PathVariable("employee_id") String expediente, @RequestBody WrapperPostEnrollQuestionsRequest request) {
     log.info("Processing preguntas enroll for expediente: {}", expediente);
 
     Boolean matching = preguntasEnrollService.validatePreguntasEnroll(request, expediente);
-    return matching ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    return matching ? ResponseEntity.ok().build() : ResponseEntity.noContent().build();
   }
 
-  @PostMapping("/{employee_id}/enrollment_questionnaire")
+  @PostMapping("/{employee_id}/enroll_questions")
   public ResponseEntity<Void> createPreguntasEnroll(
-    @PathVariable("employee_id") String expediente, @RequestBody WrapperPostEnrollmentQuestionnaireRequest request) {
+    @PathVariable("employee_id") String expediente, @RequestBody WrapperPostEnrollQuestionsRequest request) {
     log.info("Creating preguntas enroll for expediente: {}", expediente);
 
     Boolean preguntasEnrollsCreated = preguntasEnrollService.createPreguntasEnroll(request, expediente);
@@ -44,7 +44,7 @@ public class CustomerManagementController {
       ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
   }
 
-  @GetMapping("/{status_id}/questions")
+  @GetMapping("/questions")
   public ResponseEntity<WrapperGetRetrieveQuestionsResponse> getCatalogoPreguntasByEstatus(
     @PathVariable("status_id") String estatusPregunta) {
     log.info("Fetching catalogo preguntas by estatus: {}", estatusPregunta);

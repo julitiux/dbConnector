@@ -32,7 +32,7 @@ http POST http://localhost:8080/customer_management/EXP002/questions/validate \
 	]
 }'
 
-http POST http://localhost:8080/customer_management/EXP010/enroll_questions \
+http POST http://localhost:8080/customer_management/EXP002/enroll_questions \
   Content-Type:application/json \
   <<< '{
 	"questions":[
@@ -49,11 +49,11 @@ http POST http://localhost:8080/customer_management/EXP010/enroll_questions \
 
 http GET http://localhost:8080/customer_management/questions?statusId=A
 
-http GET http://localhost:8080/customer_management/EXP001/subordinates
+http GET http://localhost:8080/customer_management/EXP002/subordinates
 
 http GET http://localhost:8080/customer_management/EXP006/questions
 
-http DELETE http://localhost:8080/customer_management/EXP002/delete
+http DELETE http://localhost:8080/customer_management/EXP002/questions
 ```
 
 ## command postgreSQL

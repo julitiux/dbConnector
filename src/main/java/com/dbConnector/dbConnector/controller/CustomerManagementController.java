@@ -45,7 +45,7 @@ public class CustomerManagementController {
 
   @GetMapping("/questions")
   public ResponseEntity<WrapperGetRetrieveQuestionsResponse> getCatalogoPreguntasByEstatus(
-    @PathVariable("status_id") String estatusPregunta) {
+    @RequestParam("statusId") String estatusPregunta) {
     log.info("Fetching catalogo preguntas by estatus: {}", estatusPregunta);
 
     WrapperGetRetrieveQuestionsResponse response = catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta);

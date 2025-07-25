@@ -3,9 +3,8 @@ package com.dbConnector.dbConnector.mapper;
 import com.dbConnector.dbConnector.domain.PreguntasEnroll;
 import com.dbConnector.dbConnector.model.request.WrapperAnswer;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
-import com.dbConnector.dbConnector.model.response.Questionnaire;
-import com.dbConnector.dbConnector.model.response.QuestionnaireQuestion;
-import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
+import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionsResponse;
+import com.dbConnector.dbConnector.model.response.WrapperQuestions;
 import org.mapstruct.*;
 
 import java.time.LocalDateTime;
@@ -48,14 +47,12 @@ public interface IPreguntasEnrollMapper {
     return LocalDateTime.now().format(formatter);
   }
 
-  default WrapperGetRetrieveEmployeeQuestionaireResponse mapToWrapperGetRetrieveEmployeeQuestionaireResponse(List<PreguntasEnroll> preguntasEnrolls) {
+  default WrapperGetRetrieveEmployeeQuestionsResponse mapToWrapperGetRetrieveEmployeeQuestionaireResponse(List<PreguntasEnroll> preguntasEnrolls) {
 
-    List<Questionnaire> questions = new java.util.ArrayList<>(preguntasEnrolls.stream()
-      .map(pregunta -> {
-        return new Questionnaire(
-          new QuestionnaireQuestion(pregunta.getId().getNoPregunta().toString())
-        );
-      }).toList());
-    return new WrapperGetRetrieveEmployeeQuestionaireResponse(questions);
+    List<WrapperQuestions> questions =
+      preguntasEnrolls.stream()
+        .map(pregunta -> new WrapperQuestions(pregunta.getId().getNoPregunta().toString(), "otro paramqtro aqui"))
+        .toList();
+    return new WrapperGetRetrieveEmployeeQuestionsResponse(questions);
   }
 }

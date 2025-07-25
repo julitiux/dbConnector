@@ -2,7 +2,7 @@ package com.dbConnector.dbConnector.controller;
 
 
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
-import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
+import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionsResponse;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveQuestionsResponse;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveSubordinatesResponse;
 import com.dbConnector.dbConnector.service.CatalogoPreguntasService;
@@ -69,11 +69,11 @@ public class CustomerManagementController {
     }
   }
 
-  @GetMapping("/{employee_id}/questionnaire")
-  public ResponseEntity<WrapperGetRetrieveEmployeeQuestionaireResponse> getPreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
+  @GetMapping("/{employee_id}/questions")
+  public ResponseEntity<WrapperGetRetrieveEmployeeQuestionsResponse> getPreguntasEnrollByExpediente(@PathVariable("employee_id") String expediente) {
     log.info("Fetching preguntas enroll by expediente: {}", expediente);
 
-    WrapperGetRetrieveEmployeeQuestionaireResponse response = preguntasEnrollService.getPreguntasEnrollByExpediente(expediente);
+    WrapperGetRetrieveEmployeeQuestionsResponse response = preguntasEnrollService.getPreguntasEnrollByExpediente(expediente);
     if (response.getQuestions() != null && !response.getQuestions().isEmpty()) {
       return ResponseEntity.ok(response);
     } else {

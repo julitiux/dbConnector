@@ -6,6 +6,7 @@ import com.dbConnector.dbConnector.model.domain.PreguntaDescripcionDTO;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollQuestionsRequest;
 import com.dbConnector.dbConnector.model.request.WrapperPostEnrollmentQuestionnaireRequest;
 import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionaireResponse;
+import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveEmployeeQuestionsResponse;
 import com.dbConnector.dbConnector.repository.PreguntasEnrollRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,13 +41,7 @@ public class PreguntasEnrollService {
     }
   }
 
-  public WrapperGetRetrieveEmployeeQuestionaireResponse getPreguntasEnrollByExpediente(String expediente) {
-
-    List<PreguntaDescripcionDTO> preguntaDescripcionDto =
-      preguntasEnrollRepository.findPreguntasYDescripcionByExpediente(expediente);
-
-    log.info(">>>>");
-    preguntaDescripcionDto.forEach(System.out::println);
+  public WrapperGetRetrieveEmployeeQuestionsResponse getPreguntasEnrollByExpediente(String expediente) {
 
     List<PreguntasEnroll> preguntasEnrolls = preguntasEnrollRepository.findByIdExpediente(expediente);
     Collections.shuffle(preguntasEnrolls);

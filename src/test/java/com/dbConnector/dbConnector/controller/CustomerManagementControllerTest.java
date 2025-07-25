@@ -129,15 +129,13 @@ class CustomerManagementControllerTest {
   @Test
   void getPreguntasEnrollByExpedienteWhenReturnIsOk() {
     final String employee_id = "ANY_ID";
-    QuestionnaireQuestion questionnaireQuestion = mock(QuestionnaireQuestion.class);
-    lenient().when(questionnaireQuestion.getQuestionId()).thenReturn("1");
-    Questionnaire questionnaire = mock(Questionnaire.class);
-    lenient().when(questionnaire.getQuestion()).thenReturn(questionnaireQuestion);
-    WrapperGetRetrieveEmployeeQuestionaireResponse wrapperGetRetrieveEmployeeQuestionaireResponse = mock(WrapperGetRetrieveEmployeeQuestionaireResponse.class);
-    lenient().when(wrapperGetRetrieveEmployeeQuestionaireResponse.getQuestions()).thenReturn(List.of(questionnaire));
-    lenient().when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapperGetRetrieveEmployeeQuestionaireResponse);
+    WrapperQuestions questions = mock(WrapperQuestions.class);
+    lenient().when(questions.getQuestionId()).thenReturn("1");
+    WrapperGetRetrieveEmployeeQuestionsResponse wrapper = mock(WrapperGetRetrieveEmployeeQuestionsResponse.class);
+    lenient().when(wrapper.getQuestions()).thenReturn(List.of(questions));
+    lenient().when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapper);
 
-    ResponseEntity<WrapperGetRetrieveEmployeeQuestionaireResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
+    ResponseEntity<WrapperGetRetrieveEmployeeQuestionsResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
     assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
     assertTrue(response.hasBody(), "has body");
   }
@@ -145,10 +143,10 @@ class CustomerManagementControllerTest {
   @Test
   void getPreguntasEnrollByExpedienteWhenReturnIsNoContent() {
     final String employee_id = "ANY_ID";
-    WrapperGetRetrieveEmployeeQuestionaireResponse wrapperGetRetrieveEmployeeQuestionaireResponse = mock(WrapperGetRetrieveEmployeeQuestionaireResponse.class);
-    when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapperGetRetrieveEmployeeQuestionaireResponse);
+    WrapperGetRetrieveEmployeeQuestionsResponse wrapper = mock(WrapperGetRetrieveEmployeeQuestionsResponse.class);
+    when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapper);
 
-    ResponseEntity<WrapperGetRetrieveEmployeeQuestionaireResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
+    ResponseEntity<WrapperGetRetrieveEmployeeQuestionsResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
     assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
     assertFalse(response.hasBody(), "has body");
   }

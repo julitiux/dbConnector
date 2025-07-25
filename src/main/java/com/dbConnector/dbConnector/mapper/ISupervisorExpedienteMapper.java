@@ -1,9 +1,8 @@
 package com.dbConnector.dbConnector.mapper;
 
 import com.dbConnector.dbConnector.domain.SupervisorExpediente;
-import com.dbConnector.dbConnector.model.response.ListSubordinate;
-import com.dbConnector.dbConnector.model.response.ListSubordinatesEmployee;
-import com.dbConnector.dbConnector.model.response.WrapperRetrieveSubordinateResponse;
+import com.dbConnector.dbConnector.model.response.WrapperGetRetrieveSubordinatesResponse;
+import com.dbConnector.dbConnector.model.response.WrapperSubordinates;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -15,12 +14,13 @@ import java.util.List;
   nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT)
 public interface ISupervisorExpedienteMapper {
 
-  default WrapperRetrieveSubordinateResponse mapToWrapperRetrieveSubordinateResponse(List<SupervisorExpediente> supervisorExpedientes) {
+  default WrapperGetRetrieveSubordinatesResponse mapToWrapperRetrieveSubordinateResponse(
+    List<SupervisorExpediente> supervisorExpedientes) {
 
-    List<ListSubordinate> subordinates = supervisorExpedientes.stream()
-      .map(supervisorExpediente -> {
-        return new ListSubordinate(new ListSubordinatesEmployee(supervisorExpediente.getExpAgente()));
-      }).toList();
-    return new WrapperRetrieveSubordinateResponse(subordinates);
+    List<WrapperSubordinates> subordinates =
+      supervisorExpedientes.stream()
+        .map(supervisorExpediente -> new WrapperSubordinates(supervisorExpediente.getExpAgente()))
+        .toList();
+    return new WrapperGetRetrieveSubordinatesResponse(subordinates);
   }
 }

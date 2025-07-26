@@ -31,57 +31,57 @@ class CustomerManagementControllerTest {
 
   @Test
   void testProcessValidatePreguntasEnrollWhenReturnOk() {
-    final String employee_id = "ANY_ID";
-    final WrapperPostEnrollQuestionsRequest request = new WrapperPostEnrollQuestionsRequest();
-    when(preguntasEnrollService.validatePreguntasEnroll(request, employee_id)).thenReturn(Boolean.TRUE);
+    final var employee_id = "ANY_ID";
+    final var wrapperRequest = new WrapperPostEnrollQuestionsRequest();
+    when(preguntasEnrollService.validatePreguntasEnroll(wrapperRequest, employee_id)).thenReturn(Boolean.TRUE);
 
-    ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, request);
+    ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, wrapperRequest);
     assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
     assertFalse(response.hasBody(), "dont has body");
   }
 
   @Test
   void testProcessValidatePreguntasEnrollWhenReturnNotFound() {
-    final String employee_id = "ANY_ID";
-    final WrapperPostEnrollQuestionsRequest request = new WrapperPostEnrollQuestionsRequest();
-    when(preguntasEnrollService.validatePreguntasEnroll(request, employee_id)).thenReturn(Boolean.FALSE);
+    final var employee_id = "ANY_ID";
+    final var wrapperRequest = new WrapperPostEnrollQuestionsRequest();
+    when(preguntasEnrollService.validatePreguntasEnroll(wrapperRequest, employee_id)).thenReturn(Boolean.FALSE);
 
-    ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, request);
+    ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, wrapperRequest);
     assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
     assertFalse(response.hasBody(), "dont has body");
   }
 
   @Test
   void createPreguntasEnrollWhenReturnCreated() {
-    final String employee_id = "ANY_ID";
-    final WrapperPostEnrollQuestionsRequest request = new WrapperPostEnrollQuestionsRequest();
-    when(preguntasEnrollService.createPreguntasEnroll(request, employee_id)).thenReturn(Boolean.TRUE);
+    final var employee_id = "ANY_ID";
+    final var wrapperRequest = new WrapperPostEnrollQuestionsRequest();
+    when(preguntasEnrollService.createPreguntasEnroll(wrapperRequest, employee_id)).thenReturn(Boolean.TRUE);
 
-    ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, request);
+    ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, wrapperRequest);
     assertEquals(201, response.getStatusCode().value(), "should be return HTTP 201");
     assertFalse(response.hasBody(), "dont has body");
   }
 
   @Test
   void createPreguntasEnrollWhenReturnBadRequest() {
-    final String employee_id = "ANY_ID";
-    final WrapperPostEnrollQuestionsRequest request = new WrapperPostEnrollQuestionsRequest();
-    when(preguntasEnrollService.createPreguntasEnroll(request, employee_id)).thenReturn(Boolean.FALSE);
+    final var employee_id = "ANY_ID";
+    final var wrapperRequest = new WrapperPostEnrollQuestionsRequest();
+    when(preguntasEnrollService.createPreguntasEnroll(wrapperRequest, employee_id)).thenReturn(Boolean.FALSE);
 
-    ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, request);
+    ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, wrapperRequest);
     assertEquals(400, response.getStatusCode().value(), "should be return HTTP 400");
     assertFalse(response.hasBody(), "dont has body");
   }
 
   @Test
   void getCatalogoPreguntasByEstatusWhenReturnOkAndTheResponseIsNotEmpty() {
-    final String estatusPregunta = "A";
-    WrapperQuestions questions = mock(WrapperQuestions.class);
+    final var estatusPregunta = "A";
+    final var questions = mock(WrapperQuestions.class);
     lenient().when(questions.getQuestionId()).thenReturn("1");
-    lenient().when(questions.getDescription()).thenReturn("Fist question:");
-    WrapperGetRetrieveQuestionsResponse wrapper = mock(WrapperGetRetrieveQuestionsResponse.class);
-    lenient().when(wrapper.getQuestions()).thenReturn(List.of(questions));
-    when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapper);
+    lenient().when(questions.getDescription()).thenReturn("First question:");
+    final var wrapperResponse = mock(WrapperGetRetrieveQuestionsResponse.class);
+    lenient().when(wrapperResponse.getQuestions()).thenReturn(List.of(questions));
+    when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapperResponse);
 
     ResponseEntity<WrapperGetRetrieveQuestionsResponse> response =
       customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);
@@ -91,9 +91,9 @@ class CustomerManagementControllerTest {
 
   @Test
   void getCatalogoPreguntasByEstatusWhenReturnOkAndTheResponseIsEmpty() {
-    final String estatusPregunta = "A";
-    final WrapperGetRetrieveQuestionsResponse wrapperGetRetrieveQuestionsResponse = mock(WrapperGetRetrieveQuestionsResponse.class);
-    when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapperGetRetrieveQuestionsResponse);
+    final var estatusPregunta = "A";
+    final var wrapperResponse = mock(WrapperGetRetrieveQuestionsResponse.class);
+    when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapperResponse);
 
     ResponseEntity<WrapperGetRetrieveQuestionsResponse> response =
       customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);
@@ -103,12 +103,12 @@ class CustomerManagementControllerTest {
 
   @Test
   void getSubordinadosByExpedienteWhenReturnIsOk() {
-    final String employee_id = "ANY_ID";
-    WrapperSubordinates wrapperSubordinates = mock(WrapperSubordinates.class);
+    final var employee_id = "ANY_ID";
+    final var wrapperSubordinates = mock(WrapperSubordinates.class);
     lenient().when(wrapperSubordinates.getNumber()).thenReturn("1");
-    WrapperGetRetrieveSubordinatesResponse wrapper = mock(WrapperGetRetrieveSubordinatesResponse.class);
-    lenient().when(wrapper.getSubordinates()).thenReturn(List.of(wrapperSubordinates));
-    when(supervisorExpedienteService.getSubordinariosId(employee_id)).thenReturn(wrapper);
+    final var wrapperResponse = mock(WrapperGetRetrieveSubordinatesResponse.class);
+    lenient().when(wrapperResponse.getSubordinates()).thenReturn(List.of(wrapperSubordinates));
+    when(supervisorExpedienteService.getSubordinariosId(employee_id)).thenReturn(wrapperResponse);
 
     ResponseEntity<WrapperGetRetrieveSubordinatesResponse> response = customerManagementController.getSubordinadosByExpediente(employee_id);
     assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
@@ -117,9 +117,9 @@ class CustomerManagementControllerTest {
 
   @Test
   void getSubordinadosByExpedienteWhenReturnIsNotContent() {
-    final String employee_id = "ANY_ID";
-    WrapperGetRetrieveSubordinatesResponse wrapper = mock(WrapperGetRetrieveSubordinatesResponse.class);
-    when(supervisorExpedienteService.getSubordinariosId(employee_id)).thenReturn(wrapper);
+    final var employee_id = "ANY_ID";
+    final var wrapperResponse = mock(WrapperGetRetrieveSubordinatesResponse.class);
+    when(supervisorExpedienteService.getSubordinariosId(employee_id)).thenReturn(wrapperResponse);
 
     ResponseEntity<WrapperGetRetrieveSubordinatesResponse> response = customerManagementController.getSubordinadosByExpediente(employee_id);
     assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
@@ -128,12 +128,12 @@ class CustomerManagementControllerTest {
 
   @Test
   void getPreguntasEnrollByExpedienteWhenReturnIsOk() {
-    final String employee_id = "ANY_ID";
-    WrapperQuestions questions = mock(WrapperQuestions.class);
+    final var employee_id = "ANY_ID";
+    final var questions = mock(WrapperQuestions.class);
     lenient().when(questions.getQuestionId()).thenReturn("1");
-    WrapperGetRetrieveEmployeeQuestionsResponse wrapper = mock(WrapperGetRetrieveEmployeeQuestionsResponse.class);
-    lenient().when(wrapper.getQuestions()).thenReturn(List.of(questions));
-    lenient().when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapper);
+    final var wrapperResponse = mock(WrapperGetRetrieveEmployeeQuestionsResponse.class);
+    lenient().when(wrapperResponse.getQuestions()).thenReturn(List.of(questions));
+    lenient().when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapperResponse);
 
     ResponseEntity<WrapperGetRetrieveEmployeeQuestionsResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
     assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
@@ -142,9 +142,9 @@ class CustomerManagementControllerTest {
 
   @Test
   void getPreguntasEnrollByExpedienteWhenReturnIsNoContent() {
-    final String employee_id = "ANY_ID";
-    WrapperGetRetrieveEmployeeQuestionsResponse wrapper = mock(WrapperGetRetrieveEmployeeQuestionsResponse.class);
-    when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapper);
+    final var employee_id = "ANY_ID";
+    final var wrapperResponse = mock(WrapperGetRetrieveEmployeeQuestionsResponse.class);
+    when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapperResponse);
 
     ResponseEntity<WrapperGetRetrieveEmployeeQuestionsResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
     assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
@@ -153,7 +153,7 @@ class CustomerManagementControllerTest {
 
   @Test
   void deletePreguntasEnrollByExpedienteWhenReturnNoContent() {
-    final String employee_id = "ANY_ID";
+    final var employee_id = "ANY_ID";
     when(preguntasEnrollService.deletePreguntasEnrollByExpediente(employee_id)).thenReturn(Boolean.TRUE);
 
     ResponseEntity<Void> response = customerManagementController.deletePreguntasEnrollByExpediente(employee_id);
@@ -163,7 +163,7 @@ class CustomerManagementControllerTest {
 
   @Test
   void deletePreguntasEnrollByExpedienteWhenReturnNotFound() {
-    final String employee_id = "ANY_ID";
+    final var employee_id = "ANY_ID";
     when(preguntasEnrollService.deletePreguntasEnrollByExpediente(employee_id)).thenReturn(Boolean.FALSE);
 
     ResponseEntity<Void> response = customerManagementController.deletePreguntasEnrollByExpediente(employee_id);

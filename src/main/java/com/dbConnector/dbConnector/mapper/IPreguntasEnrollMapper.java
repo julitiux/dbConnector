@@ -48,11 +48,15 @@ public interface IPreguntasEnrollMapper {
     return LocalDateTime.now().format(formatter);
   }
 
+  @Mapping(target = "questionId", source = "noPregunta")
+  @Mapping(target = "description", source = "descPregunta")
+  WrapperQuestions mapToPreguntasEnroll(PreguntaDescripcionDTO pregunta);
+
   default WrapperGetRetrieveEmployeeQuestionsResponse mapToWrapperGetRetrieveEmployeeQuestionaireResponse(List<PreguntaDescripcionDTO> preguntasEnrolls) {
 
     List<WrapperQuestions> questions =
       preguntasEnrolls.stream()
-        .map(pregunta -> new WrapperQuestions(pregunta.getNoPregunta().toString(), pregunta.getDescPregunta()))
+        .map(this::mapToPreguntasEnroll)
         .toList();
     return new WrapperGetRetrieveEmployeeQuestionsResponse(questions);
   }

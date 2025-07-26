@@ -19,8 +19,8 @@ import java.util.Locale;
   unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IPreguntasEnrollMapper {
 
-  @Mapping(target = "id.noPregunta", source = "answer.questionId")
-  @Mapping(target = "respuestaPregunta", source = "answer.answer")
+  @Mapping(target = "id.noPregunta", source = "questionId")
+  @Mapping(target = "respuestaPregunta", source = "answer")
   PreguntasEnroll mapToPreguntasEnrollToCompare(WrapperAnswer answer);
 
   @Mapping(target = "id.noPregunta", source = "answer.questionId")

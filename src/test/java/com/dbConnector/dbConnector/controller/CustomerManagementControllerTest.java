@@ -35,7 +35,7 @@ class CustomerManagementControllerTest {
     final var wrapperRequest = new WrapperPostEnrollQuestionsRequest();
     when(preguntasEnrollService.validatePreguntasEnroll(wrapperRequest, employee_id)).thenReturn(Boolean.TRUE);
 
-    ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, wrapperRequest);
+    final var response = customerManagementController.processValidatePreguntasEnroll(employee_id, wrapperRequest);
     assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
     assertFalse(response.hasBody(), "dont has body");
   }
@@ -46,7 +46,7 @@ class CustomerManagementControllerTest {
     final var wrapperRequest = new WrapperPostEnrollQuestionsRequest();
     when(preguntasEnrollService.validatePreguntasEnroll(wrapperRequest, employee_id)).thenReturn(Boolean.FALSE);
 
-    ResponseEntity<Void> response = customerManagementController.processValidatePreguntasEnroll(employee_id, wrapperRequest);
+    final var response = customerManagementController.processValidatePreguntasEnroll(employee_id, wrapperRequest);
     assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
     assertFalse(response.hasBody(), "dont has body");
   }
@@ -57,7 +57,7 @@ class CustomerManagementControllerTest {
     final var wrapperRequest = new WrapperPostEnrollQuestionsRequest();
     when(preguntasEnrollService.createPreguntasEnroll(wrapperRequest, employee_id)).thenReturn(Boolean.TRUE);
 
-    ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, wrapperRequest);
+    final var response = customerManagementController.createPreguntasEnroll(employee_id, wrapperRequest);
     assertEquals(201, response.getStatusCode().value(), "should be return HTTP 201");
     assertFalse(response.hasBody(), "dont has body");
   }
@@ -68,7 +68,7 @@ class CustomerManagementControllerTest {
     final var wrapperRequest = new WrapperPostEnrollQuestionsRequest();
     when(preguntasEnrollService.createPreguntasEnroll(wrapperRequest, employee_id)).thenReturn(Boolean.FALSE);
 
-    ResponseEntity<Void> response = customerManagementController.createPreguntasEnroll(employee_id, wrapperRequest);
+    final var response = customerManagementController.createPreguntasEnroll(employee_id, wrapperRequest);
     assertEquals(400, response.getStatusCode().value(), "should be return HTTP 400");
     assertFalse(response.hasBody(), "dont has body");
   }
@@ -83,8 +83,7 @@ class CustomerManagementControllerTest {
     lenient().when(wrapperResponse.getQuestions()).thenReturn(List.of(questions));
     when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapperResponse);
 
-    ResponseEntity<WrapperGetRetrieveQuestionsResponse> response =
-      customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);
+    final var response = customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);
     assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
     assertTrue(response.hasBody(), "has body");
   }
@@ -95,8 +94,7 @@ class CustomerManagementControllerTest {
     final var wrapperResponse = mock(WrapperGetRetrieveQuestionsResponse.class);
     when(catalogoPreguntasService.getPreguntasByEstatus(estatusPregunta)).thenReturn(wrapperResponse);
 
-    ResponseEntity<WrapperGetRetrieveQuestionsResponse> response =
-      customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);
+    final var response = customerManagementController.getCatalogoPreguntasByEstatus(estatusPregunta);
     assertEquals(404, response.getStatusCode().value(), "should be return HTTP 404");
     assertFalse(response.hasBody(), "has not body");
   }
@@ -110,7 +108,7 @@ class CustomerManagementControllerTest {
     lenient().when(wrapperResponse.getSubordinates()).thenReturn(List.of(wrapperSubordinates));
     when(supervisorExpedienteService.getSubordinariosId(employee_id)).thenReturn(wrapperResponse);
 
-    ResponseEntity<WrapperGetRetrieveSubordinatesResponse> response = customerManagementController.getSubordinadosByExpediente(employee_id);
+    final var response = customerManagementController.getSubordinadosByExpediente(employee_id);
     assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
     assertTrue(response.hasBody(), "has body");
   }
@@ -121,7 +119,7 @@ class CustomerManagementControllerTest {
     final var wrapperResponse = mock(WrapperGetRetrieveSubordinatesResponse.class);
     when(supervisorExpedienteService.getSubordinariosId(employee_id)).thenReturn(wrapperResponse);
 
-    ResponseEntity<WrapperGetRetrieveSubordinatesResponse> response = customerManagementController.getSubordinadosByExpediente(employee_id);
+    final var response = customerManagementController.getSubordinadosByExpediente(employee_id);
     assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
     assertFalse(response.hasBody(), "has not body");
   }
@@ -135,7 +133,7 @@ class CustomerManagementControllerTest {
     lenient().when(wrapperResponse.getQuestions()).thenReturn(List.of(questions));
     lenient().when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapperResponse);
 
-    ResponseEntity<WrapperGetRetrieveEmployeeQuestionsResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
+    final var response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
     assertEquals(200, response.getStatusCode().value(), "should be return HTTP 200");
     assertTrue(response.hasBody(), "has body");
   }
@@ -146,7 +144,7 @@ class CustomerManagementControllerTest {
     final var wrapperResponse = mock(WrapperGetRetrieveEmployeeQuestionsResponse.class);
     when(preguntasEnrollService.getPreguntasEnrollByExpediente(employee_id)).thenReturn(wrapperResponse);
 
-    ResponseEntity<WrapperGetRetrieveEmployeeQuestionsResponse> response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
+    final var response = customerManagementController.getPreguntasEnrollByExpediente(employee_id);
     assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
     assertFalse(response.hasBody(), "has body");
   }
@@ -156,7 +154,7 @@ class CustomerManagementControllerTest {
     final var employee_id = "ANY_ID";
     when(preguntasEnrollService.deletePreguntasEnrollByExpediente(employee_id)).thenReturn(Boolean.TRUE);
 
-    ResponseEntity<Void> response = customerManagementController.deletePreguntasEnrollByExpediente(employee_id);
+    final var response = customerManagementController.deletePreguntasEnrollByExpediente(employee_id);
     assertEquals(204, response.getStatusCode().value(), "should be return HTTP 204");
     assertFalse(response.hasBody(), "no has body");
   }
@@ -166,7 +164,7 @@ class CustomerManagementControllerTest {
     final var employee_id = "ANY_ID";
     when(preguntasEnrollService.deletePreguntasEnrollByExpediente(employee_id)).thenReturn(Boolean.FALSE);
 
-    ResponseEntity<Void> response = customerManagementController.deletePreguntasEnrollByExpediente(employee_id);
+    final var response = customerManagementController.deletePreguntasEnrollByExpediente(employee_id);
     assertEquals(404, response.getStatusCode().value(), "should be return HTTP 404");
     assertFalse(response.hasBody(), "no has body");
   }

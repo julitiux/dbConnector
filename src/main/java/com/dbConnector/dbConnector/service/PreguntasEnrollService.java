@@ -44,7 +44,7 @@ public class PreguntasEnrollService {
     List<PreguntaDescripcionDTO> preguntasEnrolls = preguntasEnrollRepository.findPreguntasYDescripcionByExpediente(expediente);
     Collections.shuffle(preguntasEnrolls);
     List<PreguntaDescripcionDTO> preguntasEnrolls3 = preguntasEnrolls.stream().limit(3).toList();
-    return iPreguntasEnrollMapper.mapToWrapperGetRetrieveEmployeeQuestionaireResponse(preguntasEnrolls3);
+    return iPreguntasEnrollMapper.mapToWrapperGetRetrieveEmployeeQuestionsResponse(preguntasEnrolls3);
   }
 
   public Boolean deletePreguntasEnrollByExpediente(String expediente) {

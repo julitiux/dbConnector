@@ -52,7 +52,7 @@ public interface IPreguntasEnrollMapper {
   @Mapping(target = "description", source = "descPregunta")
   WrapperQuestions mapToPreguntasEnroll(PreguntaDescripcionDTO pregunta);
 
-  default WrapperGetRetrieveEmployeeQuestionsResponse mapToWrapperGetRetrieveEmployeeQuestionaireResponse(List<PreguntaDescripcionDTO> preguntasEnrolls) {
+  default WrapperGetRetrieveEmployeeQuestionsResponse mapToWrapperGetRetrieveEmployeeQuestionsResponse(List<PreguntaDescripcionDTO> preguntasEnrolls) {
 
     List<WrapperQuestions> questions =
       preguntasEnrolls.stream()
